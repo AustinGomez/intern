@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
+import throttle from "lodash/throttle";
+
 import { autoSuggestMatch, autoSuggestParse } from "./SearchBarUtilities";
 
 import "./SearchBar.css";
@@ -36,9 +38,12 @@ const SearchBar = () => {
     setValue(newValue);
   };
 
-  const onSuggestionsFetchRequested = ({ value }) => {
-    getSuggestions(value);
-  };
+  const onSuggestionsFetchRequested = useCallback(
+    throttle(({ value }) => {
+      getSuggestions(value);
+    }, 1000),
+    []
+  );
 
   const onSuggestionsClearRequested = () => {
     setSuggestions([]);
