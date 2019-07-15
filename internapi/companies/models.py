@@ -1,0 +1,25 @@
+from django.db import models
+from base.models import BaseModel
+
+# Create your models here.
+class Company(BaseModel):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100, blank=False, unique=True)
+    size = models.CharField(max_length=50, blank=True, null=True)
+    description = models.TextField(blank=True, null=True, default='')
+    website_url = models.URLField(blank=True, null=True)
+    careers_url = models.URLField(blank=True, null=True)
+    logo_url = models.URLField(blank=True, null=True)
+    slug = models.CharField(max_length=50)
+    user_reviews_count = models.IntegerField(default=0)
+    total_rating = models.FloatField(blank=True, null=True)
+    avg_rating = models.FloatField(blank=True, null=True)
+    hq_city = models.CharField(max_length=50, blank=True, null=True)
+    hq_region = models.CharField(max_length=50, blank=True, null=True)
+    hq_country = models.CharField(max_length=50, blank=True, null=True)
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "companies"
+
+

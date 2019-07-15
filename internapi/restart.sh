@@ -1,0 +1,1 @@
+docker restart internapi_web_1
