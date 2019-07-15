@@ -41,7 +41,7 @@ const SearchBar = () => {
   const onSuggestionsFetchRequested = useCallback(
     throttle(({ value }) => {
       getSuggestions(value);
-    }, 1000),
+    }, 700),
     []
   );
 
@@ -72,8 +72,8 @@ const SearchBar = () => {
   };
 
   return (
-    <div class="field is-grouped">
-      <p class="control is-expanded">
+    <div className="field is-grouped">
+      <div className="control is-expanded">
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -82,9 +82,9 @@ const SearchBar = () => {
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />
-      </p>
-      <p class="control">
-        <a class="button is-primary">Search</a>
+      </div>
+      <p className="control">
+        <button className="button is-primary">Search</button>
       </p>
     </div>
   );
