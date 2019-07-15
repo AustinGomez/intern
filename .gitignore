@@ -8,6 +8,7 @@ internapi/esdata
 node_modules
 scripts/flow/*/.flowconfig
 *~
+*.css
 *.pyc
 .grunt
 _SpecRunner.html
