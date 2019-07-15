@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import SearchBar from "../../_components/SearchBar";
 
 const Home = () => {
-  const [ companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState([]);
   const { pending, error } = useFetchData(
     "http://localhost:8000/api/companies/",
     setCompanies
