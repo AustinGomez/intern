@@ -1,78 +1,87 @@
 import React, { useState } from "react";
 import Autosuggest from "react-autosuggest";
+import axios from "axios";
+import { autoSuggestMatch, autoSuggestParse } from "./SearchBarUtilities";
 
-// Imagine you have a list of languages that you'd like to autosuggest.
-const languages = [
-  {
-    name: "C",
-    year: 1972
-  },
-  {
-    name: "Elm",
-    year: 2012
-  }
-];
+import "./SearchBar.css";
 
-// Teach Autosuggest how to calculate suggestions for any given input value.
-const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-
-  return inputLength === 0
-    ? []
-    : languages.filter(
-        lang => lang.name.toLowerCase().slice(0, inputLength) === inputValue
-      );
-};
-
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
 const getSuggestionValue = suggestion => suggestion.name;
-
-// Use your imagination to render suggestions.
-const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  // Autosuggest is a controlled component.
-  // This means that you need to provide an input value
-  // and an onChange handler that updates this value (see below).
-  // Suggestions also need to be provided to the Autosuggest,
-  // and they are initially empty because the Autosuggest is closed.
+
+  const renderSuggestion = (suggestion, { query }) => {
+    const matches = autoSuggestMatch(suggestion.name, query);
+    const parts = autoSuggestParse(suggestion.name, matches);
+
+    return (
+      <span>
+        {parts.map((part, index) => {
+          const className = part.highlight
+            ? "react-autosuggest__suggestion-match"
+            : null;
+
+          return (
+            <span className={className} key={index}>
+              {part.text}
+            </span>
+          );
+        })}
+      </span>
+    );
+  };
 
   const onChange = (event, { newValue }) => {
     setValue(newValue);
   };
 
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
   const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value));
+    getSuggestions(value);
   };
 
-  // Autosuggest will call this function every time you need to clear suggestions.
   const onSuggestionsClearRequested = () => {
     setSuggestions([]);
   };
 
-  const inputProps = {
-    placeholder: "Type a programming language",
-    value,
-    onChange: onChange
+  const getSuggestions = val => {
+    if (!val || val.trim().length < 1) {
+      setSuggestions([]);
+      return;
+    }
+
+    axios(`http://localhost:8000/api/autocomplete/?q=${val}`)
+      .then(response => {
+        setSuggestions(response.data ? response.data : []);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
-  // Finally, render it!
+  const inputProps = {
+    placeholder: "Search for a company",
+    value,
+    onChange: onChange,
+    className: "input"
+  };
+
   return (
-    <Autosuggest
-      suggestions={suggestions}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
-      inputProps={inputProps}
-    />
+    <div class="field is-grouped">
+      <p class="control is-expanded">
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
+        />
+      </p>
+      <p class="control">
+        <a class="button is-primary">Search</a>
+      </p>
+    </div>
   );
 };
 

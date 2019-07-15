@@ -13,7 +13,17 @@ const Home = () => {
   if (pending === true) return "pending";
   return (
     <>
-      <SearchBar />
+      <div className="hero">
+        <div className="hero-body">
+          <div className="column is-6-fullhd is-6-desktop is-6-tablet is-offset-3-fullhd is-offset-3-desktop is-offset-3-tablet">
+            <h1 className="title is-1 has-text-centered has-text-weight-bold">
+              Intern Website
+            </h1>
+            <SearchBar />
+          </div>
+        </div>
+      </div>
+      <hr />
       <ul>
         {companies.data.map((company, index) => {
           return (

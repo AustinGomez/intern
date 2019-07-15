@@ -1,10 +1,9 @@
-@import 'bulma/sass/utilities/initial-variables.sass';
-
-// Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-
+@import "bulma/sass/utilities/initial-variables.sass";
 
 // Here are some examples from the bulma docs for customization.
+
+// Import a Google Font
+//@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
 // // Set your brand colors
 // $purple: #8A4D76;
@@ -29,5 +28,4 @@
 // $input-border-color: transparent;
 // $input-shadow: none;
 
-
-@import 'bulma/bulma.sass';
+@import "bulma/bulma.sass";
