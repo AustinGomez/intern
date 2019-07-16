@@ -21,6 +21,9 @@ class CompanyViewSet(viewsets.ModelViewSet):
         company = self.get_object()
         reviews = Review.objects.filter(company_id=company).order_by('-created_date')
         review_serializer = ReviewSerializer(reviews, many=True)
+        page = self.paginate_queryset(reviews)
+        if page:
+            return self.get_paginated_response(review_serializer.data)
         return Response(review_serializer.data)
 
 class CompanySearchView(HaystackViewSet):
