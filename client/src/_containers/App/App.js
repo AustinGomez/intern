@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -8,6 +8,7 @@ import Home from "../Home";
 import "./App.css";
 
 const App = () => {
+  const [selectedCompany, setSelectedCompany] = useState();
   return (
     <>
       <Helmet>
@@ -20,7 +21,12 @@ const App = () => {
 
       <Router>
         <Switch>
-          <Route exact path="/" component={Home}></Route>
+          <Route
+            exact
+            path="/"
+            component={Home}
+            setSelectedCompany={setSelectedCompany}
+          ></Route>
         </Switch>
       </Router>
     </>

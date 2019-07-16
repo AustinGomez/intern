@@ -23,7 +23,8 @@ const ReviewCard = ({
   salary,
   currency,
   payFrequency,
-  jobTitle
+  jobTitle,
+  handleCompanyClick
 }) => {
   const formattedDescription =
     description.length > 100 ? (
@@ -36,7 +37,13 @@ const ReviewCard = ({
     <div className="box is-equal-height">
       <article className="media">
         <div className="media-left">
-          <Link to={`/${company.slug}`} className="is-64x64">
+          <Link
+            to={`/${company.slug}`}
+            className="is-64x64"
+            onClick={() => {
+              handleCompanyClick(company);
+            }}
+          >
             <FallbackIcon
               iconText={company.name}
               src={company.logo_url}

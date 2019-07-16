@@ -1,3 +1,30 @@
 .react-autosuggest__suggestion-match {
   font-weight: bold;
 }
+
+.react-autosuggest__suggestions-container {
+  border-radius: 3px;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1px;
+  background-color: #fafafa;
+  font-size: 16px;
+  text-align: left;
+  font-weight: 400;
+  max-height: 250px;
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0 0 3px #cfd8dc;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd;
+}

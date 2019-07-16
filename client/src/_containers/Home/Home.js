@@ -9,6 +9,7 @@ import Footer from "_components/Footer";
 const Home = props => {
   const [companies, setCompanies] = useState([]);
   const [reviews, setReviews] = useState([]);
+
   const { fetchCompaniesPending, fetchCompaniesError } = useFetchData(
     "http://localhost:8000/api/search/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
     setCompanies
@@ -18,6 +19,12 @@ const Home = props => {
     "http://localhost:8000/api/reviews/?ordering=-created_date&limit=4",
     setReviews
   );
+
+  const handleCompanyClick = e => {
+    console.log(e);
+    e.preventDefault();
+    props.setSelectedCompany(e);
+  };
 
   return (
     <>
@@ -52,6 +59,7 @@ const Home = props => {
                     salary={review.salary_in_cents}
                     currency={review.currency}
                     payFrequency={review.pay_period}
+                    handleCompanyClick={handleCompanyClick}
                   />
                 </div>
               );
@@ -73,6 +81,7 @@ const Home = props => {
                     iconSrc={company.logo_url}
                     slug={company.slug}
                     reviewCount={company.user_reviews_count}
+                    handleCompanyClick={handleCompanyClick}
                   />
                 </div>
               );
