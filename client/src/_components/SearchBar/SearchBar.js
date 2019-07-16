@@ -40,8 +40,10 @@ const SearchBar = () => {
 
   const onSuggestionsFetchRequested = useCallback(
     throttle(({ value }) => {
-      getSuggestions(value);
-    }, 700),
+      if (value.length > 1) {
+        getSuggestions(value);
+      }
+    }, 500),
     []
   );
 
