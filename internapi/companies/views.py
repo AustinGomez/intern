@@ -4,7 +4,6 @@ from companies.serializers import CompanySerializer, CompanySearchSerializer, Co
 from companies.models import Company
 from rest_framework import viewsets
 from rest_framework import filters
-from base.filters import RelatedOrderingFilter
 from rest_framework.decorators import action, detail_route
 from drf_haystack.viewsets import HaystackViewSet
 from drf_haystack.filters import HaystackAutocompleteFilter
