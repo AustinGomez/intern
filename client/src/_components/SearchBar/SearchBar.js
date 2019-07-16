@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import throttle from "lodash/throttle";
+import { withRouter } from "react-router-dom";
 
 import { autoSuggestMatch, autoSuggestParse } from "./SearchBarUtilities";
 
@@ -9,7 +10,7 @@ import "./SearchBar.css";
 
 const getSuggestionValue = suggestion => suggestion.name;
 
-const SearchBar = () => {
+const SearchBar = ({ history }) => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -59,11 +60,16 @@ const SearchBar = () => {
 
     axios(`http://localhost:8000/api/autocomplete/?q=${val}`)
       .then(response => {
-        setSuggestions(response.data ? response.data : []);
+        setSuggestions(response.data ? response.data.results : []);
       })
       .catch(error => {
         console.log(error);
       });
+  };
+
+  const handleSuggestionSelected = (event, selectedSuggestion) => {
+    history.push(`/companies/${selectedSuggestion.suggestion.slug}`);
+    event.preventDefault();
   };
 
   const inputProps = {
@@ -81,6 +87,7 @@ const SearchBar = () => {
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           getSuggestionValue={getSuggestionValue}
+          onSuggestionSelected={handleSuggestionSelected}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />
@@ -92,4 +99,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default withRouter(SearchBar);

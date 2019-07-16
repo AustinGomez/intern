@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const FallbackIcon = ({ href, iconText, height, width }) => {
+const FallbackIcon = ({ src, iconText, height, width }) => {
   const [errored, setErrored] = useState(false);
   const handleImageLoadError = event => {
     setErrored(true);
@@ -22,8 +22,8 @@ const FallbackIcon = ({ href, iconText, height, width }) => {
     backgroundColor: `rgb(${rgb})`
   };
 
-  return !errored && href ? (
-    <img onError={handleImageLoadError} src={href} alt="company logo icon" />
+  return !errored && src ? (
+    <img onError={handleImageLoadError} src={src} alt="company logo icon" />
   ) : (
     <p className="has-text-centered" style={styles}>
       {iconText[0]}
