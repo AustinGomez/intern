@@ -12,6 +12,7 @@ class CompanyIndex(indexes.SearchIndex, indexes.Indexable):
 
     slug = indexes.CharField(model_attr="slug", indexed=False)
     avg_rating = indexes.FloatField(model_attr="avg_rating", indexed=False, null=True)
+    total_rating = indexes.FloatField(model_attr="total_rating", indexed=False, null=True)
     logo_url = indexes.CharField(model_attr="logo_url", indexed=False, null=True)
 
     name_auto = indexes.EdgeNgramField()

@@ -8,6 +8,7 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = '__all__'
+        lookup_field = 'slug'
 
 
 class CompanySearchSerializer(HaystackSerializerMixin, CompanySerializer):
@@ -18,7 +19,17 @@ class CompanySearchSerializer(HaystackSerializerMixin, CompanySerializer):
 class CompanyAutoCompleteSerializer(HaystackSerializer):
     class Meta:
         index_classes = [CompanyIndex]
-        fields = ["name_auto", "name", "hq_city", "hq_country", "hq_region", "avg_rating", "slug", "logo_url"]
+        fields = [
+            "name_auto",
+            "name",
+            "hq_city",
+            "hq_country",
+            "hq_region",
+            "avg_rating",
+            "total_rating",
+            "slug",
+            "logo_url"
+        ]
         ignore_fields = ["name_auto"]
 
         field_aliases = {
