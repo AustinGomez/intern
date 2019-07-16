@@ -8,27 +8,16 @@ import Footer from "_components/Footer";
 
 const Home = () => {
   const [companies, setCompanies] = useState([]);
-  const { pending, error } = useFetchData(
-    "http://localhost:8000/api/companies/",
+  const [reviews, setReviews] = useState([]);
+  const { fetchCompanyPending, fetchCompanyError } = useFetchData(
+    "http://localhost:8000/api/search/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
     setCompanies
   );
 
-  const companyTags = () => {
-    if (!companies) {
-      return null;
-    }
-    return (
-      <ul>
-        {companies.data.map((company, index) => {
-          return (
-            <li key={index}>
-              <Link to={`/companies/${company.id}`}>{company.name}</Link>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
+  const { fetchReviewPending, fetchReviewError } = useFetchData(
+    "http://localhost:8000/api/reviews/?ordering=-created_date&limit=4",
+    setReviews
+  );
 
   return (
     <>
@@ -50,30 +39,43 @@ const Home = () => {
         </div>
         <div className="section">
           <h1 className="title is-4">Recent reviews</h1>
-          <div className="columns is-desktop">
-            <div className="column">
-              <ReviewCard />
-            </div>
-            <div className="column">
-              <ReviewCard />
-            </div>
-            <div className="column">
-              <ReviewCard />
-            </div>
+          <div className="columns ">
+            {reviews.map((review, index) => {
+              return (
+                <div className="column" key={index}>
+                  <ReviewCard
+                    userName={review.user_name}
+                    userId={review.user_id}
+                    overallRating={review.overall_rating}
+                    description={review.description}
+                    company={review.company.name}
+                    jobTitle={review.job.title}
+                    slug={review.company.slug}
+                    salary={review.salary_in_cents}
+                    currency={review.currency}
+                    payFrequency={review.pay_period}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="section">
           <h1 className="title is-4">Top companies</h1>
-          <div className="columns is-desktop">
-            <div className="column">
-              <CompanyCard />
-            </div>
-            <div className="column">
-              <CompanyCard />
-            </div>
-            <div className="column">
-              <CompanyCard />
-            </div>
+          <div className="columns">
+            {companies.map((company, index) => {
+              return (
+                <div className="column" key={index}>
+                  <CompanyCard
+                    name={company.name}
+                    rating={company.avg_rating}
+                    iconHref={company.logo_url}
+                    slug={company.slug}
+                    reviewCount={company.user_reviews_count}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

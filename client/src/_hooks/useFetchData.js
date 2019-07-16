@@ -8,8 +8,8 @@ const useFetchData = (url, setData) => {
   useEffect(() => {
     setPending(true);
     axios(url)
-      .then(data => {
-        setData(data);
+      .then(response => {
+        setData(response.data.results);
         setPending(false);
       })
       .catch(error => {

@@ -28,7 +28,9 @@ class CompanyAutoCompleteSerializer(HaystackSerializer):
             "avg_rating",
             "total_rating",
             "slug",
-            "logo_url"
+            "logo_url",
+            "modified_date",
+            "user_reviews_count"
         ]
         ignore_fields = ["name_auto"]
 
