@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import FallbackIcon from "_components/FallbackIcon";
@@ -15,7 +15,7 @@ const propTypes = {
   reviewCount: PropTypes.number.isRequired
 };
 
-const CompanyCard = ({ name, rating, salary, iconSrc, slug, reviewCount }) => {
+const CompanyCard = ({ name, rating, iconSrc, slug, reviewCount }) => {
   return (
     <div className="box is-equal-height">
       <article className="media">

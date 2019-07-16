@@ -1,30 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import useFetchData from "../../_hooks/useFetchData";
-import { Link } from "react-router-dom";
 import ReviewCard from "_components/ReviewCard";
 import CompanyCard from "_components/CompanyCard";
 import SearchBar from "../../_components/SearchBar";
 import Footer from "_components/Footer";
+import featuredReview from "./FeaturedReview";
+import config from "config";
 
 const Home = props => {
   const [companies, setCompanies] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  const { fetchCompaniesPending, fetchCompaniesError } = useFetchData(
-    "http://localhost:8000/api/search/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
+  useFetchData(
+    "search/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
     setCompanies
   );
 
-  const { fetchReviewPending, fetchReviewError } = useFetchData(
-    "http://localhost:8000/api/reviews/?ordering=-created_date&limit=4",
-    setReviews
+  useFetchData("reviews/?ordering=-created_date&limit=4", setReviews);
+
+  const reviewCards = useMemo(
+    () =>
+      reviews.map((review, index) => {
+        return (
+          <div
+            className="column is-3-fullhd is-6-tablet is-full-mobile"
+            key={index}
+          >
+            <ReviewCard
+              userName={review.user_name}
+              userId={review.user_id}
+              overallRating={review.overall_rating}
+              description={review.description}
+              company={review.company}
+              jobTitle={review.job.title}
+              salary={review.salary_in_cents}
+              currency={review.currency}
+              payFrequency={review.pay_period}
+            />
+          </div>
+        );
+      }),
+    [reviews]
   );
 
-  const handleCompanyClick = e => {
-    console.log(e);
-    e.preventDefault();
-    props.setSelectedCompany(e);
-  };
+  const companyCards = useMemo(
+    () =>
+      companies.map((company, index) => {
+        return (
+          <div
+            className="column is-3-desktop is-6-tablet is-full-mobile"
+            key={index}
+          >
+            <CompanyCard
+              name={company.name}
+              rating={company.avg_rating}
+              iconSrc={company.logo_url}
+              slug={company.slug}
+              reviewCount={company.user_reviews_count}
+            />
+          </div>
+        );
+      }),
+    [companies]
+  );
 
   return (
     <>
@@ -40,53 +78,46 @@ const Home = props => {
             <SearchBar history={props.history} />
           </div>
         </div>
-        <div className="section">
-          <h1 className="title is-4">Recent reviews</h1>
-          <div className="columns is-mobile is-multiline">
-            {reviews.map((review, index) => {
-              return (
-                <div
-                  className="column is--fullhd is-6-tablet is-full-mobile"
-                  key={index}
-                >
-                  <ReviewCard
-                    userName={review.user_name}
-                    userId={review.user_id}
-                    overallRating={review.overall_rating}
-                    description={review.description}
-                    company={review.company}
-                    jobTitle={review.job.title}
-                    salary={review.salary_in_cents}
-                    currency={review.currency}
-                    payFrequency={review.pay_period}
-                    handleCompanyClick={handleCompanyClick}
-                  />
-                </div>
-              );
-            })}
+      </div>
+      <div className="section is-medium has-background-light">
+        <div className="container">
+          <div className="columns">
+            <div className="column">
+              <p className="title">Intern website is powered by students.</p>
+              <p className="">
+                Read reviews, find salaries, and explore the best companies to
+                work for.
+              </p>
+            </div>
+            <div className="column">
+              {reviews[0] && (
+                <ReviewCard
+                  userName={featuredReview.user_name}
+                  userId={featuredReview.user_id}
+                  overallRating={featuredReview.overall_rating}
+                  description={featuredReview.description}
+                  company={featuredReview.company}
+                  jobTitle={featuredReview.job.title}
+                  salary={featuredReview.salary_in_cents}
+                  currency={featuredReview.currency}
+                  payFrequency={featuredReview.pay_period}
+                  textLimit={250}
+                />
+              )}
+            </div>
           </div>
         </div>
-        <div className="section">
+      </div>
+      <div className="section">
+        <div className="container">
+          <h1 className="title is-4">Recent reviews</h1>
+          <div className="columns is-mobile is-multiline">{reviewCards}</div>
+        </div>
+      </div>
+      <div className="section">
+        <div className="container">
           <h1 className="title is-4">Top companies</h1>
-          <div className="columns is-mobile is-multiline">
-            {companies.map((company, index) => {
-              return (
-                <div
-                  className="column is-3-desktop is-6-tablet is-full-mobile"
-                  key={index}
-                >
-                  <CompanyCard
-                    name={company.name}
-                    rating={company.avg_rating}
-                    iconSrc={company.logo_url}
-                    slug={company.slug}
-                    reviewCount={company.user_reviews_count}
-                    handleCompanyClick={handleCompanyClick}
-                  />
-                </div>
-              );
-            })}
-          </div>
+          <div className="columns is-mobile is-multiline">{companyCards}</div>
         </div>
       </div>
       <div className="section is-medium">

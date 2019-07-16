@@ -1,22 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import FallbackIcon from "_components/FallbackIcon";
 
 import "./ReviewCard.css";
 
-const propTypes = {
-  userName: PropTypes.string.isRequired,
-  overallRating: PropTypes.number.isRequired,
-  description: PropTypes.string,
-  company: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired
-};
-
 const ReviewCard = ({
-  userName,
-  userId,
   overallRating,
   description,
   company,
@@ -24,11 +13,12 @@ const ReviewCard = ({
   currency,
   payFrequency,
   jobTitle,
-  handleCompanyClick
+  handleCompanyClick,
+  textLimit = 100
 }) => {
   const formattedDescription =
-    description.length > 100 ? (
-      <span>{description.substring(0, 100)}&nbsp;...</span>
+    description.length > textLimit ? (
+      <span>{description.substring(0, textLimit)}&nbsp;...</span>
     ) : (
       description
     );
@@ -77,7 +67,5 @@ const ReviewCard = ({
     </div>
   );
 };
-
-ReviewCard.propTypes = propTypes;
 
 export default ReviewCard;
