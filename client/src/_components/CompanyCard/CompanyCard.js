@@ -21,7 +21,7 @@ const CompanyCard = ({ name, rating, iconSrc, slug, reviewCount }) => {
       <article className="media">
         <figure className="media-left">
           <p className="image is-64x64">
-            <Link to={`/${slug}`} className="is-64x64">
+            <Link to={`/companies/${slug}`} className="is-64x64">
               <FallbackIcon
                 iconText={name}
                 src={iconSrc}
@@ -33,7 +33,7 @@ const CompanyCard = ({ name, rating, iconSrc, slug, reviewCount }) => {
         </figure>
         <div className="media-content">
           <div className="content">
-            <Link to={`/${slug}`}>
+            <Link to={`/companies/${slug}`}>
               <span className="title is-5">{name}</span>
             </Link>
             <br />

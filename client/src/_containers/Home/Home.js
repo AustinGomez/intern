@@ -5,8 +5,8 @@ import CompanyCard from "_components/CompanyCard";
 import SearchBar from "../../_components/SearchBar";
 import Footer from "_components/Footer";
 import featuredReview from "./FeaturedReview";
+import MailChimpSubscribe from "react-mailchimp-subscribe";
 import config from "config";
-
 const Home = props => {
   const [companies, setCompanies] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -64,13 +64,56 @@ const Home = props => {
     [companies]
   );
 
+  const CustomForm = ({ status, message, onValidated }) => {
+    let email;
+    const submit = () =>
+      email &&
+      email.value.indexOf("@") > -1 &&
+      onValidated({
+        EMAIL: email.value
+      });
+
+    return (
+      <>
+        {status === "error" && (
+          <div
+            style={{ color: "red" }}
+            dangerouslySetInnerHTML={{ __html: message }}
+          />
+        )}
+        {status === "success" && (
+          <div
+            style={{ color: "green" }}
+            dangerouslySetInnerHTML={{ __html: message }}
+          />
+        )}
+        <div className="field is-grouped">
+          <div className="control is-expanded">
+            <input
+              ref={node => (email = node)}
+              type="email"
+              className="input is-medium is-flat"
+              placeholder="Your email"
+              required
+            />
+          </div>
+          <div className="control">
+            <button className="button is-medium is-link" onClick={submit}>
+              Submit
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <div className="container">
         <div className="section is-medium">
           <div className="column is-6-fullhd is-6-desktop is-6-tablet is-offset-3-fullhd is-offset-3-desktop is-offset-3-tablet">
             <h1 className="title is-1 has-text-centered has-text-weight-bold">
-              Intern Website
+              InternBeat
             </h1>
             <h1 className="title is-4 has-text-centered">
               Find your dream internship.
@@ -81,9 +124,9 @@ const Home = props => {
       </div>
       <div className="section is-medium has-background-light">
         <div className="container">
-          <div className="columns">
+          <div className="columns is-vcentered">
             <div className="column">
-              <p className="title">Intern website is powered by students.</p>
+              <p className="title">InternBeat is powered by students.</p>
               <p className="">
                 Read reviews, find salaries, and explore the best companies to
                 work for.
@@ -130,22 +173,16 @@ const Home = props => {
               </p>
             </div>
             <div className="column">
-              <form>
-                <div className="field is-grouped">
-                  <div className="control is-expanded">
-                    <input
-                      type="email"
-                      className="input is-medium is-flat"
-                      placeholder="Email address"
-                    />
-                  </div>
-                  <div className="control">
-                    <button className="button is-medium is-link">
-                      <strong>Subscribe</strong>
-                    </button>
-                  </div>
-                </div>
-              </form>
+              <MailChimpSubscribe
+                url={config.mailchimpSignupURL}
+                render={({ subscribe, status, message }) => (
+                  <CustomForm
+                    status={status}
+                    message={message}
+                    onValidated={formData => subscribe(formData)}
+                  />
+                )}
+              />
             </div>
           </div>
         </div>
