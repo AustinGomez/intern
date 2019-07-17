@@ -19,4 +19,6 @@ router.register(r'reviews', ReviewViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     path('admin/', admin.site.urls),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls'))
 ]
