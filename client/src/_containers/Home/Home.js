@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from "react";
-import useFetchData from "../../_hooks/useFetchData";
+import useFetchData from "_hooks/useFetchData";
 import ReviewCard from "_components/ReviewCard";
 import CompanyCard from "_components/CompanyCard";
-import SearchBar from "../../_components/SearchBar";
+import SearchBar from "_components/SearchBar";
 import Footer from "_components/Footer";
 import featuredReview from "./FeaturedReview";
-import MailChimpSubscribe from "react-mailchimp-subscribe";
-import config from "config";
+import MailingListSignupInput from "_components/MailingListSignupInput";
 
 const Home = props => {
   const [companies, setCompanies] = useState([]);
@@ -68,49 +67,6 @@ const Home = props => {
     [companies]
   );
 
-  const CustomForm = ({ status, message, onValidated }) => {
-    let email;
-    const submit = () =>
-      email &&
-      email.value.indexOf("@") > -1 &&
-      onValidated({
-        EMAIL: email.value
-      });
-
-    return (
-      <>
-        {status === "error" && (
-          <div
-            style={{ color: "red" }}
-            dangerouslySetInnerHTML={{ __html: message }}
-          />
-        )}
-        {status === "success" && (
-          <div
-            style={{ color: "green" }}
-            dangerouslySetInnerHTML={{ __html: message }}
-          />
-        )}
-        <div className="field is-grouped">
-          <div className="control is-expanded">
-            <input
-              ref={node => (email = node)}
-              type="email"
-              className="input is-medium is-flat"
-              placeholder="Your email"
-              required
-            />
-          </div>
-          <div className="control">
-            <button className="button is-medium is-link" onClick={submit}>
-              <strong>Submit</strong>
-            </button>
-          </div>
-        </div>
-      </>
-    );
-  };
-
   return (
     <>
       <div className="container">
@@ -122,7 +78,10 @@ const Home = props => {
             <h1 className="title is-4 has-text-centered">
               Find your dream internship.
             </h1>
-            <SearchBar />
+            <SearchBar
+              inputCustomClass={"is-medium"}
+              buttonCustomClass={"is-medium"}
+            />
           </div>
         </div>
       </div>
@@ -181,16 +140,7 @@ const Home = props => {
               </p>
             </div>
             <div className="column">
-              <MailChimpSubscribe
-                url={config.mailchimpSignupURL}
-                render={({ subscribe, status, message }) => (
-                  <CustomForm
-                    status={status}
-                    message={message}
-                    onValidated={formData => subscribe(formData)}
-                  />
-                )}
-              />
+              <MailingListSignupInput />
             </div>
           </div>
         </div>

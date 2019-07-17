@@ -10,7 +10,7 @@ import "./SearchBar.css";
 
 const getSuggestionValue = suggestion => suggestion.name;
 
-const SearchBar = ({ history }) => {
+const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -76,7 +76,7 @@ const SearchBar = ({ history }) => {
     placeholder: "Search for a company",
     value,
     onChange: onChange,
-    className: "input is-medium"
+    className: `input ${inputCustomClass}`
   };
 
   return (
@@ -93,7 +93,7 @@ const SearchBar = ({ history }) => {
         />
       </div>
       <p className="control">
-        <button className="button is-primary is-medium">
+        <button className={`button is-primary ${buttonCustomClass}`}>
           <strong>Search</strong>
         </button>
       </p>
