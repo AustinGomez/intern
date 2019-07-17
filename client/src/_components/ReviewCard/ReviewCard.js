@@ -38,7 +38,7 @@ const ReviewCard = ({
     <div className="box is-equal-height">
       <article className="media">
         <div className="media-left">
-          <Link to={`/${company.slug}`} className="is-64x64">
+          <Link to={`/companies/${company.slug}`} className="is-64x64">
             <FallbackIcon
               iconText={company.name}
               src={company.logo_url}

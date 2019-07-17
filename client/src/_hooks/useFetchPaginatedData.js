@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useFetchData = (url, setData) => {
+const useFetchPaginatedData = (url, setData) => {
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(null);
 
@@ -9,7 +9,7 @@ const useFetchData = (url, setData) => {
     setPending(true);
     axios(url)
       .then(response => {
-        setData(response.data);
+        setData(response.data.results);
         setPending(false);
       })
       .catch(error => {
@@ -21,4 +21,4 @@ const useFetchData = (url, setData) => {
   return { pending, error };
 };
 
-export default useFetchData;
+export default useFetchPaginatedData;
