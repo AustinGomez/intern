@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import Navbar from "_containers/Navbar";
 import Home from "_containers/Home";
 import "./App.css";
+import EmailConfirmed from "_containers/EmailConfirmed";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/confirmed" component={EmailConfirmed} />
           </Switch>
         </>
       </Router>
