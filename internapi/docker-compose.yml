@@ -17,11 +17,9 @@ services:
       - "9200:9200"
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000 --settings=internapi.settings.development_settings
     volumes:
       - .:/code
-    environment:
-      - DJANGO_SETTINGS_MODULE=internapi.settings.development_settings
     ports:
       - "8000:8000"
     depends_on:
