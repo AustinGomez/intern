@@ -46,21 +46,21 @@ const CompanyCard = ({
               <span className="title is-5">{name}</span>
             </Link>
             <br />
+            <StarRatings
+              rating={rating}
+              starRatedColor="#abcde7"
+              numberOfStars={5}
+              starDimension="17px"
+              starSpacing="1px"
+              name="rating"
+            />
+            <br />
             {city || region ? (
               <small>
                 {city ? city : ""}
                 {region && city ? ", " + region : region}
               </small>
             ) : null}
-            <br />
-            <StarRatings
-              rating={rating}
-              starRatedColor="blue"
-              numberOfStars={5}
-              starDimension="15px"
-              starSpacing="1px"
-              name="rating"
-            />
             <br />
           </div>
         </div>

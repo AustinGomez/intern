@@ -37,7 +37,7 @@ const Home = props => {
               salary={review.salary_in_cents}
               currency={review.currency}
               payFrequency={review.pay_period}
-              textLimit={300}
+              textLimit={200}
             />
           </div>
         );
@@ -103,7 +103,7 @@ const Home = props => {
           </div>
           <div className="control">
             <button className="button is-medium is-link" onClick={submit}>
-              Submit
+              <strong>Submit</strong>
             </button>
           </div>
         </div>

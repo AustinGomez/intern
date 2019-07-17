@@ -10,7 +10,7 @@ const Navbar = props => {
         <Link className="navbar-item" to="/">
           <p className="title is-4">InternBeat</p>
         </Link>
-        <a
+        <span
           role="button"
           className={`navbar-burger burger ${isOpen ? "is-active" : ""}`}
           aria-label="menu"
@@ -21,7 +21,7 @@ const Navbar = props => {
           <span aria-hidden="true" />
           <span aria-hidden="true" />
           <span aria-hidden="true" />
-        </a>
+        </span>
       </div>
       <div id="navMenu" className={`navbar-menu ${isOpen ? "is-active" : ""}`}>
         <div className="navbar-start"></div>

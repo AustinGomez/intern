@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import StarRatings from "react-star-ratings";
 import FallbackIcon from "_components/FallbackIcon";
 
 import "./ReviewCard.css";
@@ -34,25 +34,38 @@ const ReviewCard = ({
               width={64}
             />
           </Link>
+          <br />
+
+          <br />
         </div>
         <div className="media-content">
           <div className="content">
-            <div>
-              <h1 className="title is-5 is-inline">
-                <Link
-                  className="has-text-grey-dark"
-                  to={`/companies/${company.slug}`}
-                >
-                  {company.name}
-                </Link>
-              </h1>{" "}
-              - {jobTitle}
-              <br />
-              <strong>{overallRating} / 5</strong> - {salary / 100} {currency}{" "}
-              {payFrequency.charAt(0).toUpperCase() + payFrequency.slice(1)}
-              <br />
-              {formattedDescription}
-            </div>
+            <span className="title is-5 is-inline">
+              <Link
+                className="has-text-grey-dark"
+                to={`/companies/${company.slug}`}
+              >
+                {company.name}
+              </Link>
+            </span>
+            <br />
+            <small className="is-subtitle">{jobTitle}</small>
+            <br />
+            <small>
+              ${salary / 100} ({currency}){" "}
+              {payFrequency.charAt(0) + payFrequency.slice(1)}
+            </small>
+            <br />
+            <StarRatings
+              rating={overallRating}
+              starRatedColor="#abcde7"
+              numberOfStars={5}
+              starDimension="17px"
+              starSpacing="1px"
+              name="rating"
+            />
+            <br />
+            {formattedDescription}
           </div>
         </div>
       </article>

@@ -76,7 +76,7 @@ const SearchBar = ({ history }) => {
     placeholder: "Search for a company",
     value,
     onChange: onChange,
-    className: "input"
+    className: "input is-medium"
   };
 
   return (
@@ -93,7 +93,9 @@ const SearchBar = ({ history }) => {
         />
       </div>
       <p className="control">
-        <button className="button is-primary">Search</button>
+        <button className="button is-primary is-medium">
+          <strong>Search</strong>
+        </button>
       </p>
     </div>
   );
