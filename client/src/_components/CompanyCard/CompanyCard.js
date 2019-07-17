@@ -9,22 +9,13 @@ import "./CompanyCard.css";
 const propTypes = {
   name: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  salary: PropTypes.number,
-  iconSr: PropTypes.string,
+  iconSrc: PropTypes.string,
   slug: PropTypes.string.isRequired,
-  reviewCount: PropTypes.number.isRequired
+  city: PropTypes.string.isRequired,
+  region: PropTypes.string.isRequired
 };
 
-const CompanyCard = ({
-  name,
-  rating,
-  iconSrc,
-  slug,
-  reviewCount,
-  city,
-  region,
-  country
-}) => {
+const CompanyCard = ({ name, rating, iconSrc, slug, city, region }) => {
   return (
     <div className="box is-equal-height">
       <article className="media">

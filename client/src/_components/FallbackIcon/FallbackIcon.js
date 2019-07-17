@@ -1,4 +1,13 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import CompanyCard from "../CompanyCard";
+
+const propTypes = {
+  src: PropTypes.string,
+  iconText: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired
+};
 
 const FallbackIcon = React.memo(({ src, iconText, height, width }) => {
   const [errored, setErrored] = useState(false);
@@ -30,5 +39,7 @@ const FallbackIcon = React.memo(({ src, iconText, height, width }) => {
     </p>
   );
 });
+
+CompanyCard.propTypes = propTypes;
 
 export default FallbackIcon;
