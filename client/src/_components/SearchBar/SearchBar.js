@@ -3,12 +3,15 @@ import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import throttle from "lodash/throttle";
 import { withRouter } from "react-router-dom";
-
 import { autoSuggestMatch, autoSuggestParse } from "./SearchBarUtilities";
-
+import PropTypes from "prop-types";
 import "./SearchBar.css";
 
-const getSuggestionValue = suggestion => suggestion.name;
+const propTypes = {
+  history: PropTypes.object,
+  inputCustomClass: PropTypes.string,
+  buttonCustomClass: PropTypes.string
+};
 
 const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
   const [value, setValue] = useState("");
@@ -34,6 +37,8 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       </span>
     );
   };
+
+  const getSuggestionValue = suggestion => suggestion.name;
 
   const onChange = (event, { newValue }) => {
     setValue(newValue);
@@ -100,5 +105,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
     </div>
   );
 };
+
+SearchBar.propTypes = propTypes;
 
 export default withRouter(SearchBar);
