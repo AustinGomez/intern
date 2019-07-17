@@ -32,9 +32,7 @@ const CompanyHeader = props => {
             name="rating"
           />
         </div>
-        <h1>
-          Total Number of Internship Reviews: {props.totalNumberOfReviews}
-        </h1>
+        <h1>Total number of reviews:{props.totalNumberOfReviews}</h1>
       </div>
     </div>
   );
