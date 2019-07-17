@@ -1,1 +1,8 @@
-Hello sir this is a test
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}Welcome to InternBeat!
+
+Before you can leave a review, you need to confirm your email address. Just click the link below and then sign in to get started.
+
+{{ activate_url }}
+{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}- The InternBeat team
+{% endblocktrans %}
