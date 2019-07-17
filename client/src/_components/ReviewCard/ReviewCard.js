@@ -1,9 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import FallbackIcon from "_components/FallbackIcon";
 
 import "./ReviewCard.css";
+
+const propTypes = {
+  overallRating: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  company: PropTypes.object.isRequired,
+  salary: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
+  payFrequency: PropTypes.string.isRequired,
+  jobTitle: PropTypes.string.isRequired,
+  textLimit: PropTypes.number
+};
 
 const ReviewCard = ({
   overallRating,
@@ -72,5 +84,7 @@ const ReviewCard = ({
     </div>
   );
 };
+
+ReviewCard.propTypes = propTypes;
 
 export default ReviewCard;
