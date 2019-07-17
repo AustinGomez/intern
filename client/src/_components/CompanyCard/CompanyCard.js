@@ -15,7 +15,16 @@ const propTypes = {
   reviewCount: PropTypes.number.isRequired
 };
 
-const CompanyCard = ({ name, rating, iconSrc, slug, reviewCount }) => {
+const CompanyCard = ({
+  name,
+  rating,
+  iconSrc,
+  slug,
+  reviewCount,
+  city,
+  region,
+  country
+}) => {
   return (
     <div className="box is-equal-height">
       <article className="media">
@@ -37,6 +46,13 @@ const CompanyCard = ({ name, rating, iconSrc, slug, reviewCount }) => {
               <span className="title is-5">{name}</span>
             </Link>
             <br />
+            {city || region ? (
+              <small>
+                {city ? city : ""}
+                {region && city ? ", " + region : region}
+              </small>
+            ) : null}
+            <br />
             <StarRatings
               rating={rating}
               starRatedColor="blue"
@@ -44,8 +60,7 @@ const CompanyCard = ({ name, rating, iconSrc, slug, reviewCount }) => {
               starDimension="15px"
               starSpacing="1px"
               name="rating"
-            />{" "}
-            ({reviewCount})
+            />
             <br />
           </div>
         </div>

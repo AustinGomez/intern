@@ -7,6 +7,7 @@ import Footer from "_components/Footer";
 import featuredReview from "./FeaturedReview";
 import MailChimpSubscribe from "react-mailchimp-subscribe";
 import config from "config";
+
 const Home = props => {
   const [companies, setCompanies] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -23,7 +24,7 @@ const Home = props => {
       reviews.map((review, index) => {
         return (
           <div
-            className="column is-3-fullhd is-6-tablet is-full-mobile"
+            className="column is-6-fullhd is-6-tablet is-full-mobile"
             key={index}
           >
             <ReviewCard
@@ -36,6 +37,7 @@ const Home = props => {
               salary={review.salary_in_cents}
               currency={review.currency}
               payFrequency={review.pay_period}
+              textLimit={300}
             />
           </div>
         );
@@ -48,7 +50,7 @@ const Home = props => {
       companies.map((company, index) => {
         return (
           <div
-            className="column is-3-desktop is-6-tablet is-full-mobile"
+            className="column is-3-fullhd is-6-tablet is-full-mobile"
             key={index}
           >
             <CompanyCard
@@ -57,6 +59,8 @@ const Home = props => {
               iconSrc={company.logo_url}
               slug={company.slug}
               reviewCount={company.user_reviews_count}
+              city={company.hq_city}
+              region={company.hq_region}
             />
           </div>
         );
@@ -118,7 +122,7 @@ const Home = props => {
             <h1 className="title is-4 has-text-centered">
               Find your dream internship.
             </h1>
-            <SearchBar history={props.history} />
+            <SearchBar />
           </div>
         </div>
       </div>
@@ -126,41 +130,45 @@ const Home = props => {
         <div className="container">
           <div className="columns is-vcentered">
             <div className="column">
-              <p className="title">InternBeat is powered by students.</p>
-              <p className="">
+              <p className="title has-text-centered">Powered by students</p>
+              <p className="has-text-centered">
                 Read reviews, find salaries, and explore the best companies to
                 work for.
               </p>
             </div>
             <div className="column">
-              {reviews[0] && (
-                <ReviewCard
-                  userName={featuredReview.user_name}
-                  userId={featuredReview.user_id}
-                  overallRating={featuredReview.overall_rating}
-                  description={featuredReview.description}
-                  company={featuredReview.company}
-                  jobTitle={featuredReview.job.title}
-                  salary={featuredReview.salary_in_cents}
-                  currency={featuredReview.currency}
-                  payFrequency={featuredReview.pay_period}
-                  textLimit={250}
-                />
-              )}
+              <ReviewCard
+                userName={featuredReview.user_name}
+                userId={featuredReview.user_id}
+                overallRating={featuredReview.overall_rating}
+                description={featuredReview.description}
+                company={featuredReview.company}
+                jobTitle={featuredReview.job.title}
+                salary={featuredReview.salary_in_cents}
+                currency={featuredReview.currency}
+                payFrequency={featuredReview.pay_period}
+                textLimit={250}
+              />
             </div>
           </div>
         </div>
       </div>
       <div className="section">
         <div className="container">
-          <h1 className="title is-4">Recent reviews</h1>
-          <div className="columns is-mobile is-multiline">{reviewCards}</div>
+          <div className="box">
+            <h1 className="title is-4">Recent reviews</h1>
+            <div className="columns is-mobile is-multiline">{reviewCards}</div>
+          </div>
         </div>
       </div>
       <div className="section">
         <div className="container">
-          <h1 className="title is-4">Top companies</h1>
-          <div className="columns is-mobile is-multiline">{companyCards}</div>
+          <div className="box ">
+            <h1 className="title is-4">Top companies</h1>
+            <div className="columns is-centered is-multiline">
+              {companyCards}
+            </div>
+          </div>
         </div>
       </div>
       <div className="section is-medium">

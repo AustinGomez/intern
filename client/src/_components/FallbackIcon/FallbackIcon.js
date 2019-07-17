@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const FallbackIcon = ({ src, iconText, height, width }) => {
+const FallbackIcon = React.memo(({ src, iconText, height, width }) => {
   const [errored, setErrored] = useState(false);
   const handleImageLoadError = event => {
     setErrored(true);
@@ -29,6 +29,6 @@ const FallbackIcon = ({ src, iconText, height, width }) => {
       {iconText[0]}
     </p>
   );
-};
+});
 
 export default FallbackIcon;

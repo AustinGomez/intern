@@ -2,9 +2,8 @@ import React from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
-import Home from "../Home";
-
+import Navbar from "_containers/Navbar";
+import Home from "_containers/Home";
 import "./App.css";
 
 const App = () => {
@@ -19,9 +18,12 @@ const App = () => {
       </Helmet>
 
       <Router>
-        <Switch>
-          <Route exact path="/" component={Home}></Route>
-        </Switch>
+        <>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+          </Switch>
+        </>
       </Router>
     </>
   );

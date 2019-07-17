@@ -44,7 +44,7 @@ const SearchBar = ({ history }) => {
       if (value.length > 1) {
         getSuggestions(value);
       }
-    }, 500),
+    }, 1000),
     []
   );
 
@@ -58,7 +58,7 @@ const SearchBar = ({ history }) => {
       return;
     }
 
-    axios(`http://localhost:8000/api/autocomplete/?q=${val}`)
+    axios(`autocomplete/?q=${val}&limit=3`)
       .then(response => {
         setSuggestions(response.data ? response.data.results : []);
       })

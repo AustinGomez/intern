@@ -13,7 +13,6 @@ const ReviewCard = ({
   currency,
   payFrequency,
   jobTitle,
-  handleCompanyClick,
   textLimit = 100
 }) => {
   const formattedDescription =
@@ -27,13 +26,7 @@ const ReviewCard = ({
     <div className="box is-equal-height">
       <article className="media">
         <div className="media-left">
-          <Link
-            to={`/${company.slug}`}
-            className="is-64x64"
-            onClick={() => {
-              handleCompanyClick(company);
-            }}
-          >
+          <Link to={`/${company.slug}`} className="is-64x64">
             <FallbackIcon
               iconText={company.name}
               src={company.logo_url}
@@ -56,8 +49,7 @@ const ReviewCard = ({
               - {jobTitle}
               <br />
               <strong>{overallRating} / 5</strong> - {salary / 100} {currency}{" "}
-              {payFrequency.charAt(0).toUpperCase() + payFrequency.slice(1)}{" "}
-              salary
+              {payFrequency.charAt(0).toUpperCase() + payFrequency.slice(1)}
               <br />
               {formattedDescription}
             </div>
