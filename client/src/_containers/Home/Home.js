@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import useFetchData from "_hooks/useFetchData";
+import useFetchPaginatedData from "../../_hooks/useFetchPaginatedData";
 import ReviewCard from "_components/ReviewCard";
 import CompanyCard from "_components/CompanyCard";
 import SearchBar from "_components/SearchBar";
@@ -11,12 +11,12 @@ const Home = props => {
   const [companies, setCompanies] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  useFetchData(
+  useFetchPaginatedData(
     "search/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
     setCompanies
   );
 
-  useFetchData("reviews/?ordering=-created_date&limit=4", setReviews);
+  useFetchPaginatedData("reviews/?ordering=-created_date&limit=4", setReviews);
 
   const reviewCards = useMemo(
     () =>

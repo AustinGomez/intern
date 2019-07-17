@@ -2,8 +2,11 @@ import React from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
+
 import Navbar from "_containers/Navbar";
 import Home from "_containers/Home";
+import Company from "_containers/Company";
+
 import "./App.css";
 
 const App = () => {
@@ -22,6 +25,7 @@ const App = () => {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/companies/:slug" component={Company} />
           </Switch>
         </>
       </Router>
