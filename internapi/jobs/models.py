@@ -20,3 +20,6 @@ class Job(BaseModel):
     total_rating = models.FloatField(blank=True, null=True)
 
     total_salary_in_cents = models.BigIntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title + " @ " + str(self.company.name)

@@ -19,3 +19,4 @@ class Review(BaseModel):
     work_life_balance_rating = models.FloatField(blank=False, null=False)
     meaningful_work_rating = models.FloatField(blank=False, null=False)
     company_id = models.ForeignKey(to="companies.Company", on_delete=models.CASCADE)
+

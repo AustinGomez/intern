@@ -19,6 +19,9 @@ class Company(BaseModel):
     hq_country = models.CharField(max_length=50, blank=True, null=True)
     approved = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name_plural = "companies"
 
