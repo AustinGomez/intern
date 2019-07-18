@@ -28,7 +28,10 @@ const Navbar = props => {
 
         <div className="navbar-end">
           <div className="navbar-item">
-            <SearchBar />
+            <SearchBar
+              inputCustomClass={"is-hidden-desktop"}
+              buttonCustomClass={"is-hidden-desktop"}
+            />
           </div>
           <Link className="navbar-item" to="/">
             Login
