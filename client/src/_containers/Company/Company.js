@@ -110,8 +110,8 @@ const Company = props => {
       </div>
       <div className="section">
         <div className="container">
-          <div className="columns reverse-row-order">
-            <div className="column">
+          <div className="columns is-centered reverse-row-order">
+            <div className="column is-3-desktop">
               <div className="card">
                 <div className="card-content">
                   {" "}
@@ -139,7 +139,7 @@ const Company = props => {
                 </div>
               </div>
             </div>
-            <div className="column is-9-desktop">
+            <div className="column is-narrow">
               <div className="container">
                 {filteredCompanyReviews.map((review, index) => {
                   return (

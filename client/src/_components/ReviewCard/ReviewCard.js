@@ -37,7 +37,8 @@ const ReviewCard = ({
     );
 
   return (
-    <div className="box is-equal-height">
+    // < className="box review-card is-equal-height">
+    <>
       <article className="media">
         {showIcon ? (
           <div className="media-left">
@@ -83,7 +84,7 @@ const ReviewCard = ({
           </div>
         </div>
       </article>
-    </div>
+    </>
   );
 };
 
