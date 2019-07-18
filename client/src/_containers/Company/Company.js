@@ -16,7 +16,7 @@ const Company = props => {
   const [selectedJobLocations, setJobLocations] = useState([]);
   const [selectedJobTitles, setJobTitles] = useState([]);
 
-  const { fetchCompanyDetailsPending, fetchCompanyDetailsError } = useFetchData(
+  const { fetchCompanyDetailsPending } = useFetchData(
     `companies/${props.match.params.slug}/`,
     setCompany
   );
@@ -29,7 +29,7 @@ const Company = props => {
     [setNumberOfReviews, setCompanyReviews]
   );
 
-  const { fetchCompanyReviewsPending, fetchCompanyReviewsError } = useFetchData(
+  useFetchData(
     `companies/${props.match.params.slug}/reviews/`,
     setFetchedReviews
   );
@@ -59,7 +59,6 @@ const Company = props => {
     )
   ).map(slug => {
     const review = companyReviews.find(review => review.job.slug === slug);
-    console.log(companyReviews);
     return {
       value: review.job.slug,
       label: review.job.title
@@ -89,6 +88,7 @@ const Company = props => {
     axios(`companies/${props.match.params.slug}/reviews/?page=${pageNumber}`)
       .then(response => {
         setCompanyReviews(response.data ? response.data.results : []);
+        window.scrollTo(0, 0);
       })
       .catch(error => {
         console.log(error);

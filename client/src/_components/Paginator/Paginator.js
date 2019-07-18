@@ -3,13 +3,14 @@ import React, { useCallback } from "react";
 const Paginator = ({ onClickGoToPage, currentPageNumber, pageCount }) => {
   const handleClickNext = useCallback(() => {
     if (currentPageNumber !== pageCount) {
-      onClickGoToPage(currentPageNumber => currentPageNumber + 1);
+      onClickGoToPage(currentPageNumber + 1);
     }
-  }, [onClickGoToPage, currentPageNumber]);
+  }, [onClickGoToPage, currentPageNumber, pageCount]);
 
   const handleClickPrev = useCallback(() => {
+    console.log(currentPageNumber + 1);
     if (currentPageNumber !== 1) {
-      onClickGoToPage(currentPageNumber => currentPageNumber + 1);
+      onClickGoToPage(currentPageNumber - 1);
     }
   }, [onClickGoToPage, currentPageNumber]);
 
@@ -22,16 +23,24 @@ const Paginator = ({ onClickGoToPage, currentPageNumber, pageCount }) => {
 
   return (
     <nav className="pagination" role="navigation" aria-label="pagination">
-      <a onClick={handleClickPrev} className="pagination-previous">
+      <span
+        onClick={handleClickPrev}
+        className="pagination-previous"
+        disabled={currentPageNumber === 1}
+      >
         Previous
-      </a>
-      <a onClick={handleClickNext} className="pagination-next">
+      </span>
+      <span
+        onClick={handleClickNext}
+        className="pagination-next"
+        disabled={currentPageNumber === pageCount}
+      >
         Next page
-      </a>
+      </span>
       <ul className="pagination-list">
         {[...Array(pageCount)].map((_, index) => {
           return (
-            <a
+            <span
               key={index}
               onClick={() => handleClickGoTo(index + 1)}
               className={`pagination-link ${
@@ -40,7 +49,7 @@ const Paginator = ({ onClickGoToPage, currentPageNumber, pageCount }) => {
               aria-label={`goto page 45`}
             >
               {index + 1}
-            </a>
+            </span>
           );
         })}
       </ul>
