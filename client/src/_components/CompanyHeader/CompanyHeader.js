@@ -1,42 +1,44 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-
 import FallbackIcon from "../../_components/FallbackIcon";
-
 import "./CompanyHeader.scss";
 import StarRatings from "react-star-ratings";
 
-const CompanyHeader = props => {
+const CompanyHeader = React.memo(props => {
+  const icon = useMemo(() => {
+    return (
+      <FallbackIcon
+        iconText={props.iconText}
+        src={props.logoUrl}
+        height={80}
+        width={80}
+      />
+    );
+  }, [props.iconText, props.logoUrl]);
+
   return (
-    <div className="columns">
-      <div className="column is-one-third is-offset-one-sixth">
-        <div className="float-right">
-          <FallbackIcon
-            iconText={props.iconText}
-            src={props.logoUrl}
-            height={64}
-            width={64}
-          />
+    <div className="container">
+      <div className="columns is-mobile is-centered is-multiline">
+        <div className="column is-narrow">{icon}</div>
+        <div className="column is-narrow">
+          <p className="title is-4 is-marginless">{props.name}</p>
+          <small>Reviews: {props.totalNumberOfReviews}</small>
+          <br />
+          <div className="inline">
+            <StarRatings
+              rating={props.averageRating}
+              starRatedColor="blue"
+              numberOfStars={5}
+              starDimension="20px"
+              starSpacing="3px"
+              name="rating"
+            />
+          </div>
         </div>
-      </div>
-      <div className="column">
-        <h4>{props.name}</h4>
-        <div className="inline">
-          <h1 className="m-r-1">Average Internship Rating: </h1>
-          <StarRatings
-            rating={props.averageRating}
-            starRatedColor="blue"
-            numberOfStars={5}
-            starDimension="15px"
-            starSpacing="1px"
-            name="rating"
-          />
-        </div>
-        <h1>Total number of reviews:{props.totalNumberOfReviews}</h1>
       </div>
     </div>
   );
-};
+});
 
 CompanyHeader.propTypes = {
   name: PropTypes.string,

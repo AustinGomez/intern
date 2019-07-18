@@ -14,7 +14,8 @@ const propTypes = {
   currency: PropTypes.string.isRequired,
   payFrequency: PropTypes.string.isRequired,
   jobTitle: PropTypes.string.isRequired,
-  textLimit: PropTypes.number
+  textLimit: PropTypes.number,
+  showIcon: PropTypes.bool
 };
 
 const ReviewCard = ({
@@ -25,7 +26,8 @@ const ReviewCard = ({
   currency,
   payFrequency,
   jobTitle,
-  textLimit = 100
+  textLimit = 100,
+  showIcon = true
 }) => {
   const formattedDescription =
     description.length > textLimit ? (
@@ -37,19 +39,19 @@ const ReviewCard = ({
   return (
     <div className="box is-equal-height">
       <article className="media">
-        <div className="media-left">
-          <Link to={`/companies/${company.slug}`} className="is-64x64">
-            <FallbackIcon
-              iconText={company.name}
-              src={company.logo_url}
-              height={64}
-              width={64}
-            />
-          </Link>
-          <br />
+        {showIcon ? (
+          <div className="media-left">
+            <Link to={`/companies/${company.slug}`} className="is-64x64">
+              <FallbackIcon
+                iconText={company.name}
+                src={company.logo_url}
+                height={64}
+                width={64}
+              />
+            </Link>
+          </div>
+        ) : null}
 
-          <br />
-        </div>
         <div className="media-content">
           <div className="content">
             <span className="title is-5 is-inline">
