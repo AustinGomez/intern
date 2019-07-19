@@ -43,7 +43,7 @@ const CompanyHeader = ({
 
 CompanyHeader.propTypes = {
   name: PropTypes.string,
-  iconText: PropTypes.array,
+  iconText: PropTypes.string,
   logoUrl: PropTypes.string,
   averageRating: PropTypes.number,
   totalNumberOfReviews: PropTypes.number

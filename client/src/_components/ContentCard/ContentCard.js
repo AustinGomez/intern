@@ -10,9 +10,6 @@ const propTypes = {
   overallRating: PropTypes.number,
   description: PropTypes.string,
   company: PropTypes.object.isRequired,
-  salary: PropTypes.number,
-  currency: PropTypes.string,
-  payFrequency: PropTypes.string,
   textLimit: PropTypes.number,
   showIcon: PropTypes.bool
 };
@@ -21,9 +18,6 @@ const ContentCard = ({
   overallRating,
   description,
   company,
-  salary,
-  currency,
-  payFrequency,
   subTitleItems,
   title,
   textLimit,
@@ -69,15 +63,8 @@ const ContentCard = ({
             <small>
               {subTitleItems &&
                 subTitleItems.map((item, index) => {
-                  return (
-                    <>
-                      <div key={index}>{item}</div>
-                    </>
-                  );
+                  return <div key={index}>{item}</div>;
                 })}
-              {/* <span className="no-break">
-               
-              </span> */}
             </small>
 
             <StarRatings

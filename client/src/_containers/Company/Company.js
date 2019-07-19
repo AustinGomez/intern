@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import useFetchData from "../../_hooks/useFetchData";
 import useFetchPaginatedData from "_hooks/useFetchPaginatedData";
 import Select from "react-select";
@@ -19,10 +19,7 @@ const Company = props => {
   const [selectedJobTitle, setJobTitle] = useState();
 
   // Fetch company
-  const [fetchCompanyDetailsPending, fetchCompanyDetailsError] = useFetchData(
-    `companies/${props.match.params.slug}/`,
-    setCompany
-  );
+  useFetchData(`companies/${props.match.params.slug}/`, setCompany);
 
   const setFetchedReviews = useCallback(
     data => {
@@ -33,7 +30,7 @@ const Company = props => {
   );
 
   // Fetch reviews
-  const [fetchCompanyReviewsPending, fetchCompanyReviewsError] = useFetchData(
+  const [fetchCompanyReviewsPending] = useFetchData(
     `companies/${
       props.match.params.slug
     }/reviews/?limit=${PAGE_LENGTH}&offset=${(currentPageNumber - 1) *

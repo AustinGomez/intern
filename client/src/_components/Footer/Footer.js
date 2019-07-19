@@ -9,7 +9,7 @@ const Footer = () => {
           <span aria-label="heart emoji" role="img">
             ❤️
           </span>{" "}
-          from students at the University of Waterloo.
+          by students at the University of Waterloo.
         </p>
       </div>
     </footer>
