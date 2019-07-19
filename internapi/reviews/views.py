@@ -10,3 +10,4 @@ class ReviewViewSet(viewsets.ModelViewSet):
         'company_id'
     )
     filter_backends = [filters.OrderingFilter]
+

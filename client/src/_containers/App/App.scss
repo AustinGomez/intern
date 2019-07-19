@@ -3,3 +3,13 @@
   flex-direction: column;
   height: 100%;
 }
+
+.app {
+  display: flex;
+  min-height: 88vh;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+}

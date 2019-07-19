@@ -1,22 +1,25 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import useFetchData from "../../_hooks/useFetchData";
+import useFetchPaginatedData from "_hooks/useFetchPaginatedData";
 import Select from "react-select";
 import CompanyHeader from "_components/CompanyHeader";
-import Footer from "_components/Footer";
-import ReviewCard from "../../_components/ReviewCard";
 import Paginator from "_components/Paginator";
 import "./Company.css";
-import axios from "axios";
+import CompanyReviewList from "_components/CompanyReviewList/CompanyReviewList";
+
+const PAGE_LENGTH = 10;
 
 const Company = props => {
-  const [company, setCompany] = useState([]);
+  const [company, setCompany] = useState();
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [companyReviews, setCompanyReviews] = useState([]);
-  const [numberOfReviews, setNumberOfReviews] = useState();
-  const [selectedJobLocations, setJobLocations] = useState([]);
-  const [selectedJobTitles, setJobTitles] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [numberOfReviews, setNumberOfReviews] = useState(0);
+  const [selectedJobLocation, setJobLocation] = useState();
+  const [selectedJobTitle, setJobTitle] = useState();
 
-  const { fetchCompanyDetailsPending } = useFetchData(
+  // Fetch company
+  const [fetchCompanyDetailsPending, fetchCompanyDetailsError] = useFetchData(
     `companies/${props.match.params.slug}/`,
     setCompany
   );
@@ -29,70 +32,63 @@ const Company = props => {
     [setNumberOfReviews, setCompanyReviews]
   );
 
-  useFetchData(
-    `companies/${props.match.params.slug}/reviews/`,
+  // Fetch reviews
+  const [fetchCompanyReviewsPending, fetchCompanyReviewsError] = useFetchData(
+    `companies/${
+      props.match.params.slug
+    }/reviews/?limit=${PAGE_LENGTH}&offset=${(currentPageNumber - 1) *
+      PAGE_LENGTH}${
+      selectedJobLocation ? "&location=" + selectedJobLocation.value : ""
+    }
+    ${selectedJobTitle ? "&title=" + selectedJobTitle.value : ""}`,
     setFetchedReviews
   );
 
-  if (
-    fetchCompanyDetailsPending ||
-    !company.name ||
-    !companyReviews ||
-    !companyReviews.length
-  )
-    return null;
+  // Fetch jobs
+  useFetchPaginatedData(
+    `companies/${props.match.params.slug}/jobs/?limit=100`,
+    setJobs
+  );
 
-  const jobLocations = Array.from(
-    new Set(
-      companyReviews.map(review => {
-        return review.job && review.job.location;
-      })
-    )
-  ).map(location => {
-    return { value: location, label: location };
-  });
-  const jobTitles = Array.from(
-    new Set(
-      companyReviews.map(review => {
-        return review.job && review.job.slug;
-      })
-    )
-  ).map(slug => {
-    const review = companyReviews.find(review => review.job.slug === slug);
-    return {
-      value: review.job.slug,
-      label: review.job.title
-    };
-  });
-
-  const filteredCompanyReviews = companyReviews
-    .filter(review => {
-      return (
-        !selectedJobLocations ||
-        selectedJobLocations.length === 0 ||
-        selectedJobLocations.find(
-          location => location.value === review.job.location
-        )
-      );
-    })
-    .filter(review => {
-      return (
-        !selectedJobTitles ||
-        selectedJobTitles.length === 0 ||
-        selectedJobTitles.find(title => title.value === review.job.slug)
-      );
+  const jobTitles =
+    jobs &&
+    Array.from(new Set(jobs.map(job => job.slug))).map(slug => {
+      const title = jobs.find(job => job.slug === slug).title;
+      return { value: slug, label: title };
     });
 
-  const onClickFetchPage = pageNumber => {
-    setCurrentPageNumber(pageNumber);
-    axios(`companies/${props.match.params.slug}/reviews/?page=${pageNumber}`)
-      .then(response => {
-        setCompanyReviews(response.data ? response.data.results : []);
-        window.scrollTo(0, 0);
+  const jobLocations =
+    jobs &&
+    Array.from(new Set(jobs.map(job => job.location))).map(location => {
+      return { value: location, label: location };
+    });
+
+  const filteredCompanyReviews =
+    companyReviews &&
+    companyReviews
+      .filter(review => {
+        return (
+          !selectedJobLocation ||
+          selectedJobLocation.length === 0 ||
+          selectedJobLocation.value === review.job.location
+        );
       })
-      .catch(error => {
-        console.log(error);
+      .filter(review => {
+        return (
+          !selectedJobTitle ||
+          selectedJobTitle.length === 0 ||
+          selectedJobTitle.value === review.job.slug
+        );
       });
+
+  if (!company) {
+    return null;
+  }
+
+  const onClickFetchPage = pageNumber => {
+    setCompanyReviews([]);
+    setCurrentPageNumber(pageNumber);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -110,66 +106,58 @@ const Company = props => {
       </div>
       <div className="section">
         <div className="container">
-          <div className="columns is-centered reverse-row-order">
+          <div className="columns is-centered is-desktop reverse-row-order">
             <div className="column is-3-desktop">
-              <div className="card">
-                <div className="card-content">
+              <div className="box is-rounded">
+                <div className="container">
                   {" "}
                   <p className="title is-5">Filter</p>
                   <div className="field">
                     <label className="label">Filter by location</label>
                     <Select
-                      value={selectedJobLocations}
+                      value={selectedJobLocation}
                       onChange={selectedOption =>
-                        setJobLocations(selectedOption)
+                        setJobLocation(selectedOption)
                       }
                       options={jobLocations}
-                      isMulti
+                      isClearable
                     />
                   </div>
                   <div className="field">
                     <label className="label">Filter by job title</label>
                     <Select
-                      value={selectedJobTitles}
-                      onChange={selectedOption => setJobTitles(selectedOption)}
+                      value={selectedJobTitle}
+                      onChange={selectedOption => setJobTitle(selectedOption)}
                       options={jobTitles}
-                      isMulti
+                      isClearable
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="column is-narrow">
-              <div className="container">
-                {filteredCompanyReviews.map((review, index) => {
-                  return (
-                    <ReviewCard
-                      key={index}
-                      overallRating={review.overall_rating}
-                      description={review.description}
-                      company={company}
-                      currency={review.currency}
-                      userName={""}
-                      slug={""}
-                      salary={review.salary_in_cents}
-                      payFrequency={review.pay_period}
-                      jobTitle={review.job.title}
-                      textLimit={10000}
-                      showIcon={false}
-                    />
-                  );
-                })}
+            <div className="column">
+              <div
+                className={`container  ${
+                  fetchCompanyReviewsPending ? "is-loading" : ""
+                }`}
+              >
+                <CompanyReviewList
+                  reviews={filteredCompanyReviews}
+                  pending={fetchCompanyReviewsPending}
+                />
               </div>
+              <br />
+              {numberOfReviews ? (
+                <Paginator
+                  pageCount={Math.ceil(numberOfReviews / 10)}
+                  currentPageNumber={currentPageNumber}
+                  onClickGoToPage={onClickFetchPage}
+                />
+              ) : null}
             </div>
           </div>
         </div>
-        <Paginator
-          pageCount={Math.ceil(numberOfReviews / 10)}
-          currentPageNumber={currentPageNumber}
-          onClickGoToPage={onClickFetchPage}
-        />
       </div>
-      <Footer />
     </>
   );
 };

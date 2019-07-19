@@ -4,45 +4,45 @@ import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import FallbackIcon from "_components/FallbackIcon";
 
-import "./ReviewCard.css";
+import "./ContentCard.css";
 
 const propTypes = {
-  overallRating: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
+  overallRating: PropTypes.number,
+  description: PropTypes.string,
   company: PropTypes.object.isRequired,
-  salary: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
-  payFrequency: PropTypes.string.isRequired,
-  jobTitle: PropTypes.string.isRequired,
+  salary: PropTypes.number,
+  currency: PropTypes.string,
+  payFrequency: PropTypes.string,
   textLimit: PropTypes.number,
   showIcon: PropTypes.bool
 };
 
-const ReviewCard = ({
+const ContentCard = ({
   overallRating,
   description,
   company,
   salary,
   currency,
   payFrequency,
-  jobTitle,
-  textLimit = 100,
+  subTitleItems,
+  title,
+  textLimit,
   showIcon = true
 }) => {
-  const formattedDescription =
-    description.length > textLimit ? (
-      <span>{description.substring(0, textLimit)}&nbsp;...</span>
-    ) : (
-      description
-    );
+  const formattedDescription = text => {
+    if (textLimit && text.length > textLimit) {
+      return <span>{text.substring(0, textLimit)}&nbsp;...</span>;
+    }
+    return text;
+  };
 
   return (
-    // < className="box review-card is-equal-height">
-    <>
+    // <div className="box review-card is-equal-height">
+    <div className="review-card is-equal-height">
       <article className="media">
         {showIcon ? (
           <div className="media-left">
-            <Link to={`/companies/${company.slug}`} className="is-64x64">
+            <Link to={`/companies/${company.slug}`} className="image is-64x64">
               <FallbackIcon
                 iconText={company.name}
                 src={company.logo_url}
@@ -60,17 +60,26 @@ const ReviewCard = ({
                 className="has-text-grey-dark"
                 to={`/companies/${company.slug}`}
               >
-                {company.name}
+                {title}
               </Link>
             </span>
+
             <br />
-            <small className="is-subtitle">{jobTitle}</small>
-            <br />
+
             <small>
-              ${salary / 100} ({currency}){" "}
-              {payFrequency.charAt(0) + payFrequency.slice(1)}
+              {subTitleItems &&
+                subTitleItems.map((item, index) => {
+                  return (
+                    <>
+                      <div key={index}>{item}</div>
+                    </>
+                  );
+                })}
+              {/* <span className="no-break">
+               
+              </span> */}
             </small>
-            <br />
+
             <StarRatings
               rating={overallRating}
               starRatedColor="#abcde7"
@@ -80,14 +89,15 @@ const ReviewCard = ({
               name="rating"
             />
             <br />
-            {formattedDescription}
+            {formattedDescription(description)}
           </div>
         </div>
       </article>
-    </>
+    </div>
+    // </div>
   );
 };
 
-ReviewCard.propTypes = propTypes;
+ContentCard.propTypes = propTypes;
 
-export default ReviewCard;
+export default ContentCard;

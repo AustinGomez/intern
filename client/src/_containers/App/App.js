@@ -2,7 +2,8 @@ import React from "react";
 import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
+import ScrollToTop from "_components/RouterScrollToTop";
+import Footer from "_components/Footer";
 import Navbar from "_containers/Navbar";
 import Home from "_containers/Home";
 import Company from "_containers/Company";
@@ -21,13 +22,18 @@ const App = () => {
       </Helmet>
 
       <Router>
-        <>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/companies/:slug" component={Company} />
-          </Switch>
-        </>
+        <ScrollToTop>
+          <div className="app">
+            <Navbar />
+            <div className="app-content is-fullheight">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/companies/:slug" component={Company} />
+              </Switch>
+            </div>
+          </div>
+          <Footer />
+        </ScrollToTop>
       </Router>
     </>
   );

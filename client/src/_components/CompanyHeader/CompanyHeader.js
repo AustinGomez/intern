@@ -4,29 +4,30 @@ import FallbackIcon from "../../_components/FallbackIcon";
 import "./CompanyHeader.scss";
 import StarRatings from "react-star-ratings";
 
-const CompanyHeader = React.memo(props => {
+const CompanyHeader = ({
+  iconText,
+  logoUrl,
+  name,
+  totalNumberOfReviews,
+  averageRating
+}) => {
   const icon = useMemo(() => {
     return (
-      <FallbackIcon
-        iconText={props.iconText}
-        src={props.logoUrl}
-        height={80}
-        width={80}
-      />
+      <FallbackIcon iconText={iconText} src={logoUrl} height={80} width={80} />
     );
-  }, [props.iconText, props.logoUrl]);
+  }, [iconText, logoUrl]);
 
   return (
     <div className="container">
       <div className="columns is-mobile is-centered is-multiline">
         <div className="column is-narrow">{icon}</div>
         <div className="column is-narrow">
-          <p className="title is-4 is-marginless">{props.name}</p>
-          <small>Reviews: {props.totalNumberOfReviews}</small>
+          <p className="title is-4 is-marginless">{name}</p>
+          <small>Reviews: {totalNumberOfReviews}</small>
           <br />
           <div className="inline">
             <StarRatings
-              rating={props.averageRating}
+              rating={averageRating}
               starRatedColor="blue"
               numberOfStars={5}
               starDimension="20px"
@@ -38,7 +39,7 @@ const CompanyHeader = React.memo(props => {
       </div>
     </div>
   );
-});
+};
 
 CompanyHeader.propTypes = {
   name: PropTypes.string,
