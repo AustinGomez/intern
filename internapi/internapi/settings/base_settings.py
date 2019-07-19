@@ -25,7 +25,7 @@ SECRET_KEY = '*7_f15h@d2hisw1o*%3xb0y4)-2uk5qqc&uywvo(z81in-!%h5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -93,6 +93,7 @@ WSGI_APPLICATION = 'internapi.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
