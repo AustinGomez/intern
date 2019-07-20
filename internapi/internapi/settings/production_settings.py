@@ -7,7 +7,7 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': '/cloudsql/internbeat:us-central1:intern-production',
+        'HOST': '/cloudsql/internbeat:us-central1:internbeat-production',
         'USER': 'postgres',
         'PASSWORD': os.environ['DB_PASSWORD'],
         'NAME': 'postgres',
