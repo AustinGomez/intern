@@ -1,4 +1,5 @@
 runtime: python37
+entrypoint: gunicorn -b :$PORT iternapi.app
 
 env_variables:
   SECRET_KEY: "txohe%^&vgt!ej%1b7got1l2o+x4q2n)rf2bx#xoegm2uc%)a5"
