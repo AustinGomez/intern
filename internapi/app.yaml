@@ -1,0 +1,21 @@
+runtime: custom
+
+entrypoint: gunicorn -b :8080 internapi.wsgi
+env: flex
+
+env_variables:
+  SECRET_KEY: "txohe%^&vgt!ej%1b7got1l2o+x4q2n)rf2bx#xoegm2uc%)a5"
+  DEBUG: "False"
+  DB_HOST: "/cloudsql/internbeat:us-central1:intern-production"
+  DB_PORT: "5432"
+  DB_NAME: "django"
+  DB_USER: "postgres"
+  DB_PASSWORD: "C6wyuF11KGHaNPjC"
+
+  DJANGO_SETTINGS_MODULE: "internapi.settings.production_settings"
+
+beta_settings:
+  cloud_sql_instances: internbeat:us-central1:intern-production
+
+runtime_config:
+  python_version: 3

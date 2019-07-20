@@ -150,7 +150,7 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
         'URL': 'elasticsearch:9200/',
         'INDEX_NAME': 'haystack',
     },
