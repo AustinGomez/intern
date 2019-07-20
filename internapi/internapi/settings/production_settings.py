@@ -2,7 +2,17 @@ from .base_settings import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['internbeat.com', ]
+ALLOWED_HOSTS = ['*']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': '/cloudsql/internbeat:us-central1:intern-production',
+        'USER': 'postgres',
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'NAME': 'postgres',
+    }
+}
 
 # TODO: set this up.
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
