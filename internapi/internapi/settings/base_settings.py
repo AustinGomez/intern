@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
-    'haystack',
 
     'users',
     'companies',
@@ -144,13 +143,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
-
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
-        'URL': 'elasticsearch:9200/',
-        'INDEX_NAME': 'haystack',
-    },
-}
