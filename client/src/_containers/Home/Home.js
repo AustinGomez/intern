@@ -10,7 +10,7 @@ const Home = props => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    document.title = "Internbeat | Internship Reviews";
+    document.title = "InternBeat | Internship Reviews";
   }, []);
 
   useFetchPaginatedData(
