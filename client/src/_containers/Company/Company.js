@@ -70,24 +70,6 @@ const Company = props => {
       return { value: location, label: location };
     });
 
-  const filteredCompanyReviews =
-    companyReviews &&
-    companyReviews
-      .filter(review => {
-        return (
-          !selectedJobLocation ||
-          selectedJobLocation.length === 0 ||
-          selectedJobLocation.value === review.job.location
-        );
-      })
-      .filter(review => {
-        return (
-          !selectedJobTitle ||
-          selectedJobTitle.length === 0 ||
-          selectedJobTitle.value === review.job.slug
-        );
-      });
-
   if (!company) {
     return null;
   }
@@ -153,7 +135,7 @@ const Company = props => {
                   fetchCompanyReviewsPending ? "is-loading" : ""
                 }`}
               >
-                <CompanyReviewList reviews={filteredCompanyReviews} />
+                <CompanyReviewList reviews={companyReviews} />
               </div>
               <br />
               {numberOfReviews ? (

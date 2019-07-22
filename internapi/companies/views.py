@@ -45,9 +45,10 @@ class CompanyViewSet(viewsets.ModelViewSet):
         title = self.request.query_params.get('title', None)
 
         if location:
-            reviews = reviews.filter(job_id__location=location)
+            reviews = reviews.filter(job__location=location)
         if title:
-            reviews = reviews.filter(job_id__title=title)
+            reviews = reviews.filter(job__title=title)
+
         page = self.paginate_queryset(reviews)
         review_serializer = ReviewSerializer(page, many=True)
         return self.get_paginated_response(review_serializer.data)

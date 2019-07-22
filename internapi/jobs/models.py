@@ -5,7 +5,6 @@ from base.models import BaseModel
 
 
 class Job(BaseModel):
-    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=100)
     min_salary_in_cents = models.BigIntegerField(blank=True, null=True)
     max_salary_in_cents = models.BigIntegerField(blank=True, null=True)

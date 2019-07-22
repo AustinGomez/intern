@@ -6,6 +6,16 @@ const CompanyReviewList = ({ reviews }) => {
     return <p className="title has-text-centered">No results</p>;
   }
 
+  const formatDate = dateString => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
+  };
+
   return (
     <div className="box">
       <div className="container">
@@ -18,7 +28,10 @@ const CompanyReviewList = ({ reviews }) => {
                 company={review.company}
                 currency={review.currency}
                 title={review.job.title}
-                subTitleItems={[review.job.location]}
+                subTitleItems={[
+                  review.job.location,
+                  formatDate(review.created_date)
+                ]}
                 salary={review.salary_in_cents}
                 payFrequency={review.pay_period}
                 jobTitle={review.job.title}
