@@ -18,7 +18,7 @@ const Home = props => {
     setCompanies
   );
 
-  useFetchPaginatedData("reviews/?ordering=-created_date&limit=4", setReviews);
+  useFetchPaginatedData("reviews/?ordering=-created_date&limit=6", setReviews);
 
   const reviewCards = useMemo(
     () =>
