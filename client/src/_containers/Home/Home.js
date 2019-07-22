@@ -14,11 +14,11 @@ const Home = props => {
   }, []);
 
   useFetchPaginatedData(
-    "companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=4",
+    "companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=6",
     setCompanies
   );
 
-  useFetchPaginatedData("reviews/?ordering=-created_date&limit=6", setReviews);
+  useFetchPaginatedData("reviews/?ordering=-created_date&limit=4", setReviews);
 
   const reviewCards = useMemo(
     () =>
