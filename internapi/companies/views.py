@@ -1,35 +1,39 @@
 from rest_framework.response import Response
+
 from companies.services import search_queryset
 from companies.serializers import CompanySerializer
 from companies.models import Company
 from rest_framework import viewsets
-from rest_framework import filters
-<<<<<<< HEAD
-import django_filters.rest_framework
-
-from rest_framework.decorators import action, detail_route, list_route
-from drf_haystack.viewsets import HaystackViewSet
-from drf_haystack.filters import HaystackAutocompleteFilter, HaystackFilter
-=======
-from rest_framework.decorators import action, detail_route
->>>>>>> master
-
+from rest_framework.filters import OrderingFilter
+from django_filters import rest_framework as filters
+from rest_framework.decorators import detail_route
+from django_filters.rest_framework import DjangoFilterBackend
 from jobs.models import Job
 from jobs.serializers import JobSerializer
 from reviews.models import Review
 from reviews.serializers import ReviewSerializer
 
 
+class CompanyFilter(filters.FilterSet):
+    min_total_rating = filters.NumberFilter(field_name="total_rating", lookup_expr='gte')
+    min_avg_rating = filters.NumberFilter(field_name="avg_rating", lookup_expr='gte')
+
+    class Meta:
+        model = Company
+        fields = '__all__'
+
+
 class CompanyViewSet(viewsets.ModelViewSet):
     serializer_class = CompanySerializer
     queryset = Company.objects.all()
     lookup_field = 'slug'
-    filter_backends = [filters.OrderingFilter]
-    filter_fields = '__all__'
+    filterset_class = CompanyFilter
+    filter_backends = [OrderingFilter, DjangoFilterBackend]
 
     def list(self, request, *args, **kwargs):
-        queryset = search_queryset(self.get_queryset(), request)
+        queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
+        serializer = self.serializer_class(page, many=True)
         return self.get_paginated_response(serializer.data)
 
     @detail_route()

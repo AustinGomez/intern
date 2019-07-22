@@ -68,8 +68,8 @@ const ContentCard = ({
             </small>
 
             <StarRatings
-              rating={overallRating}
-              starRatedColor="#abcde7"
+              rating={overallRating || 0}
+              starRatedColor="blue"
               numberOfStars={5}
               starDimension="17px"
               starSpacing="1px"

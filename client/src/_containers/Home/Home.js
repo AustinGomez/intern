@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import useFetchPaginatedData from "../../_hooks/useFetchPaginatedData";
 import ContentCard from "_components/ContentCard";
 import SearchBar from "_components/SearchBar";
@@ -9,8 +9,12 @@ const Home = props => {
   const [companies, setCompanies] = useState([]);
   const [reviews, setReviews] = useState([]);
 
+  useEffect(() => {
+    document.title = "Internbeat | Internship Reviews";
+  }, []);
+
   useFetchPaginatedData(
-    "companies/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
+    "companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=4",
     setCompanies
   );
 
@@ -53,12 +57,14 @@ const Home = props => {
             className="column is-3-fullhd is-6-tablet is-full-mobile"
             key={index}
           >
-            <ContentCard
-              title={company.name}
-              subTitleItems={[company.hq_city]}
-              company={company}
-              overallRating={company.avg_rating}
-            />
+            <div className="box is-equal-height">
+              <ContentCard
+                title={company.name}
+                subTitleItems={[company.hq_city]}
+                company={company}
+                overallRating={company.avg_rating}
+              />
+            </div>
           </div>
         );
       }),
@@ -124,12 +130,8 @@ const Home = props => {
       </div>
       <div className="section">
         <div className="container">
-          <div className="box ">
-            <h1 className="title is-4">Top companies</h1>
-            <div className="columns is-centered is-multiline">
-              {companyCards}
-            </div>
-          </div>
+          <h1 className="title is-4">Top companies</h1>
+          <div className="columns is-centered is-multiline">{companyCards}</div>
         </div>
       </div>
       <div className="section is-medium">

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import useFetchData from "../../_hooks/useFetchData";
 import useFetchPaginatedData from "_hooks/useFetchPaginatedData";
 import Select from "react-select";
@@ -6,6 +6,7 @@ import CompanyHeader from "_components/CompanyHeader";
 import Paginator from "_components/Paginator";
 import "./Company.css";
 import CompanyReviewList from "_components/CompanyReviewList/CompanyReviewList";
+import { set } from "react-ga";
 
 const PAGE_LENGTH = 10;
 
@@ -36,8 +37,7 @@ const Company = props => {
     }/reviews/?limit=${PAGE_LENGTH}&offset=${(currentPageNumber - 1) *
       PAGE_LENGTH}${
       selectedJobLocation ? "&location=" + selectedJobLocation.value : ""
-    }
-    ${selectedJobTitle ? "&title=" + selectedJobTitle.value : ""}`,
+    }${selectedJobTitle ? "&title=" + selectedJobTitle.label : ""}`,
     setFetchedReviews
   );
 
@@ -46,6 +46,16 @@ const Company = props => {
     `companies/${props.match.params.slug}/jobs/?limit=100`,
     setJobs
   );
+
+  useEffect(() => {
+    setCurrentPageNumber(1);
+  }, [selectedJobLocation, selectedJobTitle]);
+
+  useEffect(() => {
+    if (company && company.name) {
+      document.title = `${company.name} Internship Reviews`;
+    }
+  }, [company]);
 
   const jobTitles =
     jobs &&
@@ -83,32 +93,37 @@ const Company = props => {
   }
 
   const onClickFetchPage = pageNumber => {
-    setCompanyReviews([]);
     setCurrentPageNumber(pageNumber);
     window.scrollTo(0, 0);
   };
 
+  console.log(company);
+
   return (
     <>
-      <div className="section header">
-        <div className="container">
-          <CompanyHeader
-            name={company.name}
-            iconText={company.name}
-            logoUrl={company.logo_url}
-            averageRating={company.avg_rating}
-            totalNumberOfReviews={company.user_reviews_count}
-          />
-        </div>
-      </div>
       <div className="section">
         <div className="container">
+          <div className="columns is-centered">
+            <div className="column">
+              <CompanyHeader
+                name={company.name}
+                iconText={company.name}
+                logoUrl={company.logo_url}
+                averageRating={company.avg_rating}
+                totalNumberOfReviews={company.user_reviews_count}
+                hqCity={company.hq_city}
+                hqRegion={company.hq_region}
+                hqCountry={company.hq_country}
+                companyWebsiteUrl={company.website_url}
+                companySize={company.size}
+                description={company.description}
+              />
+            </div>
+          </div>
           <div className="columns is-centered is-desktop reverse-row-order">
             <div className="column is-3-desktop">
-              <div className="box is-rounded">
-                <div className="container">
-                  {" "}
-                  <p className="title is-5">Filter</p>
+              <div className="box is-rounded review">
+                <div className="container review-container">
                   <div className="field">
                     <label className="label">Filter by location</label>
                     <Select
@@ -138,10 +153,7 @@ const Company = props => {
                   fetchCompanyReviewsPending ? "is-loading" : ""
                 }`}
               >
-                <CompanyReviewList
-                  reviews={filteredCompanyReviews}
-                  pending={fetchCompanyReviewsPending}
-                />
+                <CompanyReviewList reviews={filteredCompanyReviews} />
               </div>
               <br />
               {numberOfReviews ? (

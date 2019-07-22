@@ -1,11 +1,7 @@
 import React from "react";
 import ContentCard from "_components/ContentCard";
-import { PulseLoader } from "halogenium";
-const CompanyReviewList = ({ reviews, pending }) => {
-  if (pending) {
-    return <PulseLoader classcolor="#26A65B" size="16px" margin="4px" />;
-  }
 
+const CompanyReviewList = ({ reviews }) => {
   if (!reviews.length) {
     return <p className="title has-text-centered">No results</p>;
   }
