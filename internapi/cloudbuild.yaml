@@ -1,6 +1,6 @@
 steps:
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "gs://internbeatconfig/app.yaml", "app.yaml"]
+    args: ["cp", "gs://internbeatconfig/app.yaml", "./internapi/app.yaml"]
 
   - name: "gcr.io/cloud-builders/gcloud"
-    args: ["app", "deploy", "app.yaml"]
+    args: ["app", "deploy", "./internapi/app.yaml"]
