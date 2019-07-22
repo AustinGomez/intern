@@ -2,12 +2,5 @@ steps:
   - name: "gcr.io/cloud-builders/gsutil"
     args: ["cp", "gs://internbeatconfig/app.yaml", "app.yaml"]
 
-    #  - name: gcr.io/cloud-builders/docker
-    # args: ["build", "-t", "gcr.io/$PROJECT_ID/app", "./internapi"]
-
-    #- name: gcr.io/cloud-builders/docker
-    #args: ["push", "gcr.io/$PROJECT_ID/app"]
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy", "app.yaml"]
-
-images: ["gcr.io/$PROJECT_ID/app"]
