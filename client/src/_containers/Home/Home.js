@@ -10,7 +10,7 @@ const Home = props => {
   const [reviews, setReviews] = useState([]);
 
   useFetchPaginatedData(
-    "search/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
+    "companies/?ordering=-avg_rating,-total_rating,-modified_date&limit=4",
     setCompanies
   );
 
