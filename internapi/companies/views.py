@@ -9,6 +9,7 @@ from rest_framework.decorators import action, detail_route
 from reviews.models import Review
 from reviews.serializers import ReviewSerializer
 
+
 class CompanyViewSet(viewsets.ModelViewSet):
     serializer_class = CompanySerializer
     queryset = Company.objects.all()
@@ -16,9 +17,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = search_queryset(self.get_queryset(), request)
-        print(queryset)
         page = self.paginate_queryset(queryset)
-        print(page)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
