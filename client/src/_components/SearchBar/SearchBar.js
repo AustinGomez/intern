@@ -49,7 +49,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       if (value.length > 1) {
         getSuggestions(value);
       }
-    }, 1000),
+    }, 1200),
     []
   );
 
@@ -63,7 +63,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       return;
     }
 
-    axios(`autocomplete/?q=${val}&limit=3`)
+    axios(`companies/?q=${val}&limit=3`)
       .then(response => {
         setSuggestions(response.data ? response.data.results : []);
       })
