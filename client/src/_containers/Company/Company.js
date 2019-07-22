@@ -1,126 +1,154 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import useFetchData from "../../_hooks/useFetchData";
-import useFetchPaginatedData from "../../_hooks/useFetchPaginatedData";
-
+import useFetchPaginatedData from "_hooks/useFetchPaginatedData";
 import Select from "react-select";
 import CompanyHeader from "_components/CompanyHeader";
-import Footer from "_components/Footer";
+import Paginator from "_components/Paginator";
+import "./Company.css";
+import CompanyReviewList from "_components/CompanyReviewList/CompanyReviewList";
+import { set } from "react-ga";
 
-import ReviewCard from "../../_components/ReviewCard";
+const PAGE_LENGTH = 10;
 
 const Company = props => {
-  const [company, setCompany] = useState([]);
+  const [company, setCompany] = useState();
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [companyReviews, setCompanyReviews] = useState([]);
-  const [selectedJobLocations, setJobLocations] = useState([]);
-  const [selectedJobTitles, setJobTitles] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [numberOfReviews, setNumberOfReviews] = useState(0);
+  const [selectedJobLocation, setJobLocation] = useState();
+  const [selectedJobTitle, setJobTitle] = useState();
 
-  const { fetchCompanyDetailsPending, fetchCompanyDetailsError } = useFetchData(
-    `companies/${props.match.params.slug}/`,
-    setCompany
+  // Fetch company
+  useFetchData(`companies/${props.match.params.slug}/`, setCompany);
+
+  const setFetchedReviews = useCallback(
+    data => {
+      setNumberOfReviews(data.count);
+      setCompanyReviews(data.results);
+    },
+    [setNumberOfReviews, setCompanyReviews]
   );
-  const {
-    fetchCompanyReviewsPending,
-    fetchCompanyReviewsError
-  } = useFetchPaginatedData(
-    `companies/${props.match.params.slug}/reviews/`,
-    setCompanyReviews
+
+  // Fetch reviews
+  const [fetchCompanyReviewsPending] = useFetchData(
+    `companies/${
+      props.match.params.slug
+    }/reviews/?limit=${PAGE_LENGTH}&offset=${(currentPageNumber - 1) *
+      PAGE_LENGTH}${
+      selectedJobLocation ? "&location=" + selectedJobLocation.value : ""
+    }${selectedJobTitle ? "&title=" + selectedJobTitle.label : ""}`,
+    setFetchedReviews
   );
 
-  if (
-    fetchCompanyDetailsPending ||
-    !company.name ||
-    !companyReviews ||
-    !companyReviews.length
-  )
-    return null;
+  // Fetch jobs
+  useFetchPaginatedData(
+    `companies/${props.match.params.slug}/jobs/?limit=100`,
+    setJobs
+  );
 
-  const jobLocations = Array.from(
-    new Set(companyReviews.map(review => review.job.location))
-  ).map(location => {
-    return { value: location, label: location };
-  });
-  const jobTitles = Array.from(
-    new Set(companyReviews.map(review => review.job.slug))
-  ).map(slug => {
-    const review = companyReviews.find(review => review.job.slug === slug);
-    return {
-      value: review.job.slug,
-      label: review.job.title
-    };
-  });
+  useEffect(() => {
+    setCurrentPageNumber(1);
+  }, [selectedJobLocation, selectedJobTitle]);
 
-  const filteredCompanyReviews = companyReviews
-    .filter(review => {
-      return (
-        !selectedJobLocations ||
-        selectedJobLocations.length === 0 ||
-        selectedJobLocations.find(
-          location => location.value === review.job.location
-        )
-      );
-    })
-    .filter(review => {
-      return (
-        !selectedJobTitles ||
-        selectedJobTitles.length === 0 ||
-        selectedJobTitles.find(title => title.value === review.job.slug)
-      );
+  useEffect(() => {
+    if (company && company.name) {
+      document.title = `${company.name} Internship Reviews`;
+    }
+  }, [company]);
+
+  const jobTitles =
+    jobs &&
+    Array.from(new Set(jobs.map(job => job.slug))).map(slug => {
+      const title = jobs.find(job => job.slug === slug).title;
+      return { value: slug, label: title };
     });
+
+  const jobLocations =
+    jobs &&
+    Array.from(new Set(jobs.map(job => job.location))).map(location => {
+      return { value: location, label: location };
+    });
+
+  if (!company) {
+    return null;
+  }
+
+  const onClickFetchPage = pageNumber => {
+    setCurrentPageNumber(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
+  console.log(company);
 
   return (
     <>
-      <div className="section header">
-        <div className="container">
-          <CompanyHeader
-            name={company.name}
-            iconText={company.name.split("")}
-            logoUrl={company.logo_url}
-            averageRating={company.avg_rating}
-            totalNumberOfReviews={company.user_reviews_count}
-          />
-        </div>
-      </div>
       <div className="section">
         <div className="container">
-          <h6>REVIEWS</h6>
-          <br />
-          <h2>FILTER ON LOCATION</h2>
-          <Select
-            value={selectedJobLocations}
-            onChange={selectedOption => setJobLocations(selectedOption)}
-            options={jobLocations}
-            isMulti
-          />
-          <h2>FILTER ON JOB TITLE</h2>
-          <Select
-            value={selectedJobTitles}
-            onChange={selectedOption => setJobTitles(selectedOption)}
-            options={jobTitles}
-            isMulti
-          />
-        </div>
-        <br />
-        <div className="container">
-          {filteredCompanyReviews.map(review => {
-            return (
-              <ReviewCard
-                overallRating={review.overall_rating}
-                description={review.description}
-                company={company}
-                currency={review.currency}
-                userName={""}
-                slug={""}
-                salary={review.salary_in_cents}
-                payFrequency={review.pay_period}
-                jobTitle={review.job.title}
-                textLimit={10000}
+          <div className="columns is-centered">
+            <div className="column">
+              <CompanyHeader
+                name={company.name}
+                iconText={company.name}
+                logoUrl={company.logo_url}
+                averageRating={company.avg_rating}
+                totalNumberOfReviews={company.user_reviews_count}
+                hqCity={company.hq_city}
+                hqRegion={company.hq_region}
+                hqCountry={company.hq_country}
+                companyWebsiteUrl={company.website_url}
+                companySize={company.size}
+                description={company.description}
               />
-            );
-          })}
+            </div>
+          </div>
+          <div className="columns is-centered is-desktop reverse-row-order">
+            <div className="column is-3-desktop">
+              <div className="box is-rounded review">
+                <div className="container review-container">
+                  <div className="field">
+                    <label className="label">Filter by location</label>
+                    <Select
+                      value={selectedJobLocation}
+                      onChange={selectedOption =>
+                        setJobLocation(selectedOption)
+                      }
+                      options={jobLocations}
+                      isClearable
+                    />
+                  </div>
+                  <div className="field">
+                    <label className="label">Filter by job title</label>
+                    <Select
+                      value={selectedJobTitle}
+                      onChange={selectedOption => setJobTitle(selectedOption)}
+                      options={jobTitles}
+                      isClearable
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="column">
+              <div
+                className={`container  ${
+                  fetchCompanyReviewsPending ? "is-loading" : ""
+                }`}
+              >
+                <CompanyReviewList reviews={companyReviews} />
+              </div>
+              <br />
+              {numberOfReviews ? (
+                <Paginator
+                  pageCount={Math.ceil(numberOfReviews / 10)}
+                  currentPageNumber={currentPageNumber}
+                  onClickGoToPage={onClickFetchPage}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
       </div>
-      <br />
-      <Footer />
     </>
   );
 };

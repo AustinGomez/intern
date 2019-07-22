@@ -17,8 +17,7 @@ const useFetchData = (url, setData) => {
         setPending(false);
       });
   }, [url, setData]);
-
-  return { pending, error };
+  return [pending, error];
 };
 
 export default useFetchData;
