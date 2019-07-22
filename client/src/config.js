@@ -9,7 +9,7 @@ switch (env) {
     mailchimpSignupURL = "fake";
     break;
   case "production":
-    apiHost = "TODO";
+    apiHost = "https://internbeat.appspot.com/";
     mailchimpSignupURL =
       "https://internbeat.us3.list-manage.com/subscribe/post?u=842438e7e73305cf065d457b4&amp;id=f09ce65602";
     break;
