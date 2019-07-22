@@ -14,7 +14,7 @@ const Home = props => {
   }, []);
 
   useFetchPaginatedData(
-    "companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=6",
+    "companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=8",
     setCompanies
   );
 
