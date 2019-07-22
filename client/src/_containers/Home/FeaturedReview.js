@@ -11,8 +11,7 @@ export default {
     website_url: "http://www.facebook.com",
     careers_url:
       "https://www.facebook.com/careers/university/internships/engineering",
-    logo_url:
-      "https://res.cloudinary.com/crunchbase-production/image/upload/c_pad,w_150,h_150/v1408491700/ypqf483smhnqo0rh6mff.png",
+    logo_url: "https://logo.clearbit.com/facebook.com",
     slug: "facebook",
     user_reviews_count: 21,
     total_rating: 90.0,
