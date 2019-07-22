@@ -82,10 +82,7 @@ const Home = props => {
             <h1 className="title is-4 has-text-centered">
               Find your dream internship.
             </h1>
-            <SearchBar
-              inputCustomClass={"is-medium"}
-              buttonCustomClass={"is-medium"}
-            />
+            <SearchBar />
           </div>
         </div>
       </div>

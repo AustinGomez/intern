@@ -31,7 +31,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     filter_backends = [OrderingFilter, DjangoFilterBackend]
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = search_queryset(self.filter_queryset(self.get_queryset()), request)
         page = self.paginate_queryset(queryset)
         serializer = self.serializer_class(page, many=True)
         return self.get_paginated_response(serializer.data)
