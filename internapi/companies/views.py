@@ -40,7 +40,10 @@ class CompanyViewSet(viewsets.ModelViewSet):
     def reviews(self, request, slug=None):
         company = self.get_object()
 
-        reviews = Review.objects.filter(company_id=company).order_by('-created_date')
+        reviews = Review.objects.filter(company=company).order_by('-created_date').select_related(
+            'job',
+            'company'
+        )
         location = self.request.query_params.get('location', None)
         title = self.request.query_params.get('title', None)
 
