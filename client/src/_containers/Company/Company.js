@@ -6,6 +6,7 @@ import CompanyHeader from "_components/CompanyHeader";
 import Paginator from "_components/Paginator";
 import "./Company.css";
 import CompanyReviewList from "_components/CompanyReviewList/CompanyReviewList";
+import { Helmet } from "react-helmet";
 import { set } from "react-ga";
 
 const PAGE_LENGTH = 10;
@@ -53,14 +54,14 @@ const Company = props => {
 
   useEffect(() => {
     if (company && company.name) {
-      document.title = `${company.name} Internship Reviews`;
+      // document.title = ;
     }
   }, [company]);
 
   const jobTitles =
     jobs &&
     Array.from(new Set(jobs.map(job => job.slug))).map(slug => {
-      const title = jobs.find(job => job.slug === slug).title;
+      const title = jobs.find(job => job.slug === slug).titvle;
       return { value: slug, label: title };
     });
 
@@ -79,10 +80,20 @@ const Company = props => {
     window.scrollTo(0, 0);
   };
 
-  console.log(company);
-
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content={`${company.name} internship reviews and salaries. See what it's like to be an intern at ${company.name}`}
+        />
+        <meta
+          name="og:description"
+          content={`Read ${numberOfReviews} ${company.name} internship reviews and salaries on InternBeat.`}
+        />
+        <meta name="og:title" content={` ${company.name} Internship Reviews`} />
+        <title>{company.name} Internship Reviews | InternBeat</title>
+      </Helmet>
       <div className="section">
         <div className="container">
           <div className="columns is-centered">

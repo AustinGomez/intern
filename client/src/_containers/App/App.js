@@ -16,13 +16,19 @@ const App = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <meta
-          name="description"
+          name="og:description"
+          content="Search internships and find the best companies to work for. See intern salaries, reviews, and more."
+        />
+        <meta name="og:title" content={` ${company.name} Internship Reviews`} />
+        <meta
+          name="pg:description"
           content="Search internships and find the best companies to work for. See intern salaries, reviews, and more."
         />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
+        <title>InternBeat | Internship Reviews</title>
       </Helmet>
 
       <Router>
