@@ -6,6 +6,9 @@ internapi/app.yaml
 internapi/venv
 internapi/esdata
 
+internapi/cloudsql/
+internapi/cloud_sql_proxy
+
 .DS_STORE
 node_modules
 scripts/flow/*/.flowconfig
