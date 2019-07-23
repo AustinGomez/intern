@@ -3,12 +3,15 @@ import Autosuggest from "react-autosuggest";
 import axios from "axios";
 import throttle from "lodash/throttle";
 import { withRouter } from "react-router-dom";
-
 import { autoSuggestMatch, autoSuggestParse } from "./SearchBarUtilities";
-
+import PropTypes from "prop-types";
 import "./SearchBar.css";
 
-const getSuggestionValue = suggestion => suggestion.name;
+const propTypes = {
+  history: PropTypes.object,
+  inputCustomClass: PropTypes.string,
+  buttonCustomClass: PropTypes.string
+};
 
 const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
   const [value, setValue] = useState("");
@@ -22,7 +25,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       <span>
         {parts.map((part, index) => {
           const className = part.highlight
-            ? "react-autosuggest__suggestion-match"
+            ? "react-autosuggest__suggestion-match has-text-primary"
             : null;
 
           return (
@@ -35,6 +38,8 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
     );
   };
 
+  const getSuggestionValue = suggestion => suggestion.name;
+
   const onChange = (event, { newValue }) => {
     setValue(newValue);
   };
@@ -44,7 +49,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       if (value.length > 1) {
         getSuggestions(value);
       }
-    }, 1000),
+    }, 1200),
     []
   );
 
@@ -58,7 +63,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       return;
     }
 
-    axios(`autocomplete/?q=${val}&limit=3`)
+    axios(`companies/?q=${val}&limit=3`)
       .then(response => {
         setSuggestions(response.data ? response.data.results : []);
       })
@@ -100,5 +105,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
     </div>
   );
 };
+
+SearchBar.propTypes = propTypes;
 
 export default withRouter(SearchBar);

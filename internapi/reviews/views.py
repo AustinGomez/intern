@@ -6,7 +6,8 @@ from rest_framework import filters
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all().select_related(
-        'job_id',
-        'company_id'
+        'job',
+        'company'
     )
     filter_backends = [filters.OrderingFilter]
+

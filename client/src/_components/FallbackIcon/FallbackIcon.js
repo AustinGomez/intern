@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import CompanyCard from "../CompanyCard";
 
 const propTypes = {
   src: PropTypes.string,
-  iconText: PropTypes.string.isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired
+  iconText: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number
 };
 
 const FallbackIcon = React.memo(({ src, iconText, height, width }) => {
   const [errored, setErrored] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const handleImageLoadError = event => {
     setErrored(true);
   };
+
+  const handleImageLoad = event => {
+    setLoaded(true);
+  };
+
+  useEffect(() => {
+    setErrored(false);
+    setLoaded(false);
+  }, [iconText]);
 
   // Generate random icon color
   let rgb = [];
@@ -31,15 +40,35 @@ const FallbackIcon = React.memo(({ src, iconText, height, width }) => {
     backgroundColor: `rgb(${rgb})`
   };
 
-  return !errored && src ? (
-    <img onError={handleImageLoadError} src={src} alt="company logo icon" />
-  ) : (
-    <p className="has-text-centered" style={styles}>
-      {iconText[0]}
-    </p>
-  );
+  // Render a hidden image first to see if it will load.
+  if (src && !errored && !loaded) {
+    return (
+      <img
+        className="is-hidden"
+        onError={handleImageLoadError}
+        onLoad={handleImageLoad}
+        src={src}
+        alt="company logo icon"
+      />
+    );
+  } else if (src && loaded) {
+    return (
+      <img
+        className="company-icon image is-64x64"
+        onError={handleImageLoadError}
+        src={src}
+        alt="company logo icon"
+      />
+    );
+  } else {
+    return (
+      <p className="has-text-centered" style={styles}>
+        {iconText[0]}
+      </p>
+    );
+  }
 });
 
-CompanyCard.propTypes = propTypes;
+FallbackIcon.propTypes = propTypes;
 
 export default FallbackIcon;

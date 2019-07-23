@@ -3,7 +3,7 @@ from django.urls import path
 from django.conf.urls import url, include
 from rest_framework import routers
 
-from companies.views import CompanyViewSet, CompanySearchView, CompanyAutocompleteSearchViewSet
+from companies.views import CompanyViewSet
 from jobs.views import JobViewSet
 from reviews.views import ReviewViewSet
 from users.views import null_view, complete_view
@@ -13,8 +13,6 @@ from allauth.account.views import ConfirmEmailView
 router = routers.DefaultRouter()
 
 router.register(r'companies', CompanyViewSet)
-router.register(r'search', CompanySearchView, basename="search")
-router.register(r'autocomplete', CompanyAutocompleteSearchViewSet, basename="auto")
 
 router.register(r'jobs', JobViewSet)
 router.register(r'reviews', ReviewViewSet)

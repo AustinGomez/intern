@@ -9,7 +9,7 @@ const useFetchData = (url, setData) => {
     setPending(true);
     axios(url)
       .then(response => {
-        setData(response.data.results);
+        setData(response.data);
         setPending(false);
       })
       .catch(error => {
@@ -17,8 +17,7 @@ const useFetchData = (url, setData) => {
         setPending(false);
       });
   }, [url, setData]);
-
-  return { pending, error };
+  return [pending, error];
 };
 
 export default useFetchData;

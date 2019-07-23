@@ -3,7 +3,6 @@ from base.models import BaseModel
 
 # Create your models here.
 class Company(BaseModel):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, blank=False, unique=True)
     size = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(blank=True, null=True, default='')
@@ -12,8 +11,8 @@ class Company(BaseModel):
     logo_url = models.URLField(blank=True, null=True)
     slug = models.CharField(max_length=50)
     user_reviews_count = models.IntegerField(default=0)
-    total_rating = models.FloatField(blank=True, null=True)
-    avg_rating = models.FloatField(blank=True, null=True)
+    total_rating = models.FloatField(default=0.0)
+    avg_rating = models.FloatField(default=0.0)
     hq_city = models.CharField(max_length=50, blank=True, null=True)
     hq_region = models.CharField(max_length=50, blank=True, null=True)
     hq_country = models.CharField(max_length=50, blank=True, null=True)
