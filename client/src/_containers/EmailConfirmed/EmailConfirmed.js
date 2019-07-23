@@ -17,7 +17,7 @@ const EmailConfirmed = () => {
           <p className="title is-1">You're all set.</p>
           <p className="subtitle">
             Just log in and start reviewing{" "}
-            <span alt="smiley emoji" role="img">
+            <span aria-label="smiley emoji" role="img">
               😄
             </span>
           </p>
