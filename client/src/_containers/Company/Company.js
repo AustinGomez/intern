@@ -89,7 +89,7 @@ const Company = props => {
         />
         <meta
           name="og:description"
-          content={`Read ${numberOfReviews} ${company.name} internship reviews and salaries on InternBeat.`}
+          content={`${company.name} internship reviews and salaries. See what it's like to be an intern at ${company.name}`}
         />
         <meta name="og:title" content={` ${company.name} Internship Reviews`} />
         <title>{company.name} Internship Reviews | InternBeat</title>
