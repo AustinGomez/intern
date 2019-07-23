@@ -77,7 +77,7 @@ const Home = props => {
         <div className="section is-medium">
           <div className="column is-6-fullhd is-6-desktop is-6-tablet is-offset-3-fullhd is-offset-3-desktop is-offset-3-tablet">
             <h1 className="title is-1 has-text-centered has-text-weight-bold">
-              InternBeat
+              Intern<span className="has-text-primary">Beat</span>
             </h1>
             <h1 className="title is-4 has-text-centered">
               Find your dream internship.
@@ -86,14 +86,14 @@ const Home = props => {
           </div>
         </div>
       </div>
-      <div className="section is-medium has-background-light">
+      <div className="section is-medium">
         <div className="container">
           <div className="columns is-vcentered">
             <div className="column">
-              <p className="title has-text-centered">Powered by students</p>
+              <p className="title has-text-centered">Powered by Students</p>
               <p className="has-text-centered">
-                Read reviews, find salaries, and explore the best companies to
-                work for.
+                Find intern salaries, read reviews, and explore the best
+                companies to work for.
               </p>
             </div>
             <div className="column">
@@ -131,7 +131,7 @@ const Home = props => {
           <div className="columns is-centered is-multiline">{companyCards}</div>
         </div>
       </div>
-      <div className="section is-medium">
+      <div className="section is-medium ">
         <div className="container">
           <div className="columns is-vcentered">
             <div className="column">

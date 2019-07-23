@@ -8,7 +8,9 @@ const Navbar = props => {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          <p className="title is-4">InternBeat</p>
+          <p className="title is-4">
+            Intern<span className="has-text-primary">Beat</span>
+          </p>
         </Link>
         <span
           role="button"

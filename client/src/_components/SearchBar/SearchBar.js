@@ -25,7 +25,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       <span>
         {parts.map((part, index) => {
           const className = part.highlight
-            ? "react-autosuggest__suggestion-match"
+            ? "react-autosuggest__suggestion-match has-text-primary"
             : null;
 
           return (

@@ -21,6 +21,9 @@ const ContentCard = ({
   subTitleItems,
   title,
   textLimit,
+  salary,
+  payFrequency,
+  currency,
   showIcon = true
 }) => {
   const formattedDescription = text => {
@@ -65,8 +68,12 @@ const ContentCard = ({
                 subTitleItems.map((item, index) => {
                   return <div key={index}>{item}</div>;
                 })}
+              {salary && payFrequency && currency ? (
+                <div>
+                  ${salary / 100} {payFrequency} ({currency})
+                </div>
+              ) : null}
             </small>
-
             <StarRatings
               rating={overallRating || 0}
               starRatedColor="blue"

@@ -41,7 +41,7 @@ const CustomEmailSignupForm = ({ status, message, onValidated }) => {
           />
         </div>
         <div className="control">
-          <button className="button is-medium is-link" onClick={submit}>
+          <button className="button is-medium is-primary" onClick={submit}>
             <strong>Submit</strong>
           </button>
         </div>
