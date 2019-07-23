@@ -61,7 +61,7 @@ const Company = props => {
   const jobTitles =
     jobs &&
     Array.from(new Set(jobs.map(job => job.slug))).map(slug => {
-      const title = jobs.find(job => job.slug === slug).titvle;
+      const title = jobs.find(job => job.slug === slug).title;
       return { value: slug, label: title };
     });
 
