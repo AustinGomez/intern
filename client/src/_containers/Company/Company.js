@@ -125,6 +125,7 @@ const Company = props => {
                       }
                       options={jobLocations}
                       isClearable
+                      isSearchable={false}
                     />
                   </div>
                   <div className="field">
@@ -134,6 +135,7 @@ const Company = props => {
                       onChange={selectedOption => setJobTitle(selectedOption)}
                       options={jobTitles}
                       isClearable
+                      isSearchable={false}
                     />
                   </div>
                 </div>
