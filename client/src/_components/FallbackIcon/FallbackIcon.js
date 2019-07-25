@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Skeleton from "react-loading-skeleton";
 
 const propTypes = {
   src: PropTypes.string,
@@ -43,13 +44,16 @@ const FallbackIcon = React.memo(({ src, iconText, height, width }) => {
   // Render a hidden image first to see if it will load.
   if (src && !errored && !loaded) {
     return (
-      <img
-        className="is-hidden"
-        onError={handleImageLoadError}
-        onLoad={handleImageLoad}
-        src={src}
-        alt="company logo icon"
-      />
+      <>
+        <Skeleton width={64} height={64} />
+        <img
+          className="is-hidden"
+          onError={handleImageLoadError}
+          onLoad={handleImageLoad}
+          src={src}
+          alt="company logo icon"
+        />
+      </>
     );
   } else if (src && loaded) {
     return (

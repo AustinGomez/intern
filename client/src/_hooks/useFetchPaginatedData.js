@@ -18,7 +18,7 @@ const useFetchPaginatedData = (url, setData) => {
       });
   }, [url, setData]);
 
-  return { pending, error };
+  return [pending, error];
 };
 
 export default useFetchPaginatedData;
