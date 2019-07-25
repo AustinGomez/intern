@@ -7,12 +7,11 @@ import Paginator from "_components/Paginator";
 import "./Company.css";
 import CompanyReviewList from "_components/CompanyReviewList/CompanyReviewList";
 import { Helmet } from "react-helmet";
-import { set } from "react-ga";
 
 const PAGE_LENGTH = 10;
 
 const Company = props => {
-  const [company, setCompany] = useState();
+  const [company, setCompany] = useState({});
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [companyReviews, setCompanyReviews] = useState([]);
   const [jobs, setJobs] = useState([]);
@@ -20,8 +19,17 @@ const Company = props => {
   const [selectedJobLocation, setJobLocation] = useState();
   const [selectedJobTitle, setJobTitle] = useState();
 
+  const pageDescription = `${company &&
+    company.name}  internship reviews and salaries. 
+    See what it's like to be an intern at ${company && company.name}`;
+  const pageTitle = `${company &&
+    company.name} Internship Reviews | InternBeat`;
+
   // Fetch company
-  useFetchData(`companies/${props.match.params.slug}/`, setCompany);
+  const [isCompanyLoading] = useFetchData(
+    `companies/${props.match.params.slug}/`,
+    setCompany
+  );
 
   const setFetchedReviews = useCallback(
     data => {
@@ -71,10 +79,6 @@ const Company = props => {
       return { value: location, label: location };
     });
 
-  if (!company) {
-    return null;
-  }
-
   const onClickFetchPage = pageNumber => {
     setCurrentPageNumber(pageNumber);
     window.scrollTo(0, 0);
@@ -83,16 +87,10 @@ const Company = props => {
   return (
     <>
       <Helmet>
-        <meta
-          name="description"
-          content={`${company.name} internship reviews and salaries. See what it's like to be an intern at ${company.name}`}
-        />
-        <meta
-          name="og:description"
-          content={`${company.name} internship reviews and salaries. See what it's like to be an intern at ${company.name}`}
-        />
-        <meta name="og:title" content={` ${company.name} Internship Reviews`} />
-        <title>{company.name} Internship Reviews | InternBeat</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="og:description" content={pageDescription} />
+        <meta name="og:title" content={pageTitle} />
+        <title>{pageTitle}</title>
       </Helmet>
       <div className="section">
         <div className="container">
@@ -110,6 +108,7 @@ const Company = props => {
                 companyWebsiteUrl={company.website_url}
                 companySize={company.size}
                 description={company.description}
+                isLoading={isCompanyLoading}
               />
             </div>
           </div>
@@ -126,6 +125,7 @@ const Company = props => {
                       }
                       options={jobLocations}
                       isClearable
+                      isSearchable={false}
                     />
                   </div>
                   <div className="field">
@@ -135,18 +135,18 @@ const Company = props => {
                       onChange={selectedOption => setJobTitle(selectedOption)}
                       options={jobTitles}
                       isClearable
+                      isSearchable={false}
                     />
                   </div>
                 </div>
               </div>
             </div>
             <div className="column">
-              <div
-                className={`container  ${
-                  fetchCompanyReviewsPending ? "is-loading" : ""
-                }`}
-              >
-                <CompanyReviewList reviews={companyReviews} />
+              <div className="container">
+                <CompanyReviewList
+                  reviews={companyReviews}
+                  isLoading={fetchCompanyReviewsPending}
+                />
               </div>
               <br />
               {numberOfReviews ? (

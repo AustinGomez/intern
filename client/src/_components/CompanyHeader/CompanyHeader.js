@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import FallbackIcon from "../../_components/FallbackIcon";
 import "./CompanyHeader.scss";
 import StarRatings from "react-star-ratings";
+import Skeleton from "react-loading-skeleton";
 
 const CompanyHeader = ({
   iconText,
@@ -10,8 +11,8 @@ const CompanyHeader = ({
   name,
   totalNumberOfReviews,
   averageRating,
-  companyWebsiteUrl,
   companySize,
+  isLoading,
   description,
   hqCity,
   hqRegion
@@ -22,7 +23,15 @@ const CompanyHeader = ({
     );
   }, [iconText, logoUrl]);
 
-  const formatLocation = (hqCity, hqRegion) => {
+  const renderLocation = () => {
+    if (isLoading) {
+      return (
+        <>
+          <Skeleton count={1} height={12} width={100} />
+          <br />
+        </>
+      );
+    }
     let locationString = "";
     if (hqCity) {
       locationString += hqCity;
@@ -41,48 +50,47 @@ const CompanyHeader = ({
     );
   };
 
-  const formatCompanyWebsite = url => {
-    if (companyWebsiteUrl) {
-      return <a href={`${companyWebsiteUrl}`}>{companyWebsiteUrl}</a>;
-    } else {
-      return "Unknown";
-    }
-  };
-
   return (
-    <div className="">
-      <div className="box">
-        <div className="columns is-centered is-vcentered">
-          <div className="column is-narrow">
-            <div className=" columns is-vcentered is-mobile is-centered is-multiline is-narrow">
-              <div className="column is-narrow">{icon}</div>
-              <div className="column is-narrow has-text-centered-mobile">
-                <p className="title is-4 is-marginless">{name}</p>
-                <small>Reviews: {totalNumberOfReviews}</small>
-                <br />
-                {formatLocation(hqCity, hqRegion)}
-                <div className="inline">
-                  <StarRatings
-                    rating={averageRating || 0}
-                    starRatedColor="blue"
-                    numberOfStars={5}
-                    starDimension="20px"
-                    starSpacing="3px"
-                    name="rating"
-                  />
-                </div>
+    <div className="box">
+      <div className="columns is-centered is-vcentered">
+        <div className="column">
+          <div className="columns is-vcentered is-mobile is-centered">
+            <div className="column is-narrow">
+              {!isLoading ? icon : <Skeleton height={64} width={64} />}
+            </div>
+            <div className="column">
+              <p className="title is-4 is-marginless">
+                {!isLoading ? name : <Skeleton height={20} width={200} />}
+              </p>
+              <small>
+                {!isLoading ? (
+                  "Reviews: " + String(totalNumberOfReviews)
+                ) : (
+                  <Skeleton height={12} width={100} />
+                )}
+              </small>
+              <br />
+              {renderLocation()}
+              <div className="inline">
+                <StarRatings
+                  rating={averageRating || 0}
+                  starRatedColor="blue"
+                  numberOfStars={5}
+                  starDimension="20px"
+                  starSpacing="3px"
+                  name="rating"
+                />
               </div>
             </div>
           </div>
-          <div className="column is-narrow has-text-centered-mobile">
-            <div>Website: {formatCompanyWebsite(companyWebsiteUrl)}</div>
-            <br />
-            <button className="button is-primary">Write a review</button>
-          </div>
         </div>
-        <hr />
-        <div>{description}</div>
       </div>
+      <hr />
+      <div className="column is-narrow has-text-centered-mobile">
+        <button className="button is-primary">Write a review</button>
+      </div>
+      <br />
+      <div>{!isLoading ? description : <Skeleton count={3} />}</div>
     </div>
   );
 };

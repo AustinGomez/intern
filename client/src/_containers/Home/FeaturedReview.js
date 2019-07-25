@@ -25,7 +25,7 @@ export default {
     id: 90,
     created_date: "2016-10-27T05:41:17.569000Z",
     modified_date: "2017-03-28T18:16:14.383000Z",
-    title: "Data Engineer, Business Intelligence",
+    title: "Data Engineer Intern, Business Intelligence",
     min_salary_in_cents: 680000,
     max_salary_in_cents: 680000,
     avg_salary_in_cents: 680000,

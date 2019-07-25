@@ -49,7 +49,7 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       if (value.length > 1) {
         getSuggestions(value);
       }
-    }, 1200),
+    }, 800),
     []
   );
 

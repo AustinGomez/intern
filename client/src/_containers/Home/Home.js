@@ -3,7 +3,12 @@ import useFetchPaginatedData from "../../_hooks/useFetchPaginatedData";
 import ContentCard from "_components/ContentCard";
 import SearchBar from "_components/SearchBar";
 import featuredReview from "./FeaturedReview";
-import MailingListSignupInput from "_components/MailingListSignupInput";
+import NewsletterSignupSection from "_components/NewsletterSignupSection";
+
+import "./home.css";
+
+const NUMBER_OF_RECENT_REVIEWS = 4;
+const NUMBER_OF_TOP_COMPANIES = 8;
 
 const Home = props => {
   const [companies, setCompanies] = useState([]);
@@ -13,12 +18,15 @@ const Home = props => {
     document.title = "InternBeat | Internship Reviews";
   }, []);
 
-  useFetchPaginatedData(
-    "companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=8",
+  const [isCompaniesLoading] = useFetchPaginatedData(
+    `companies/?ordering=-avg_rating,-total_rating,-modified_date&min_total_rating=20&limit=${NUMBER_OF_TOP_COMPANIES}`,
     setCompanies
   );
 
-  useFetchPaginatedData("reviews/?ordering=-created_date&limit=4", setReviews);
+  const [isReviewsLoading] = useFetchPaginatedData(
+    `reviews/?ordering=-created_date&limit=${NUMBER_OF_RECENT_REVIEWS}`,
+    setReviews
+  );
 
   const reviewCards = useMemo(
     () =>
@@ -71,10 +79,34 @@ const Home = props => {
     [companies]
   );
 
+  const loadingCompanyCards = [...Array(NUMBER_OF_TOP_COMPANIES)].map(
+    (_, i) => {
+      return (
+        <div className="column is-3-fullhd is-6-tablet is-full-mobile" key={i}>
+          <div className="box is-equal-height">
+            <ContentCard isLoading={true} showDescription={false} />
+          </div>
+        </div>
+      );
+    }
+  );
+
+  const loadingReviewCards = [...Array(NUMBER_OF_RECENT_REVIEWS)].map(
+    (_, i) => {
+      return (
+        <div className="column is-6-fullhd is-6-tablet is-full-mobile" key={i}>
+          <div className="box is-equal-height">
+            <ContentCard isLoading={true} />
+          </div>
+        </div>
+      );
+    }
+  );
+
   return (
     <>
       <div className="container">
-        <div className="section is-medium">
+        <div className="section is-medium search-section">
           <div className="column is-6-fullhd is-6-desktop is-6-tablet is-offset-3-fullhd is-offset-3-desktop is-offset-3-tablet">
             <h1 className="title is-1 has-text-centered has-text-weight-bold">
               Intern<span className="has-text-primary">Beat</span>
@@ -86,18 +118,20 @@ const Home = props => {
           </div>
         </div>
       </div>
-      <div className="section is-medium">
+      <div className="section powered-by-section is-medium has-background-info">
         <div className="container">
           <div className="columns is-vcentered">
             <div className="column">
-              <p className="title has-text-centered">Powered by Students</p>
-              <p className="has-text-centered">
+              <p className="title is-2 has-text-centered-mobile has-text-white">
+                Powered by Students
+              </p>
+              <p className="subtitle has-text-centered-mobile has-text-white">
                 Find intern salaries, read reviews, and explore the best
                 companies to work for.
               </p>
             </div>
             <div className="column">
-              <div className="box is-equal-height">
+              <div className="box">
                 <ContentCard
                   userName={featuredReview.user_name}
                   userId={featuredReview.user_id}
@@ -122,28 +156,22 @@ const Home = props => {
       <div className="section">
         <div className="container">
           <h1 className="title is-4">Recent reviews</h1>
-          <div className="columns is-mobile is-multiline">{reviewCards}</div>
+          <div className="columns is-mobile is-multiline">
+            {isReviewsLoading ? loadingReviewCards : reviewCards}
+          </div>
         </div>
       </div>
       <div className="section">
         <div className="container">
           <h1 className="title is-4">Top companies</h1>
-          <div className="columns is-centered is-multiline">{companyCards}</div>
+          <div className="columns is-centered is-multiline">
+            {isCompaniesLoading ? loadingCompanyCards : companyCards}
+          </div>
         </div>
       </div>
       <div className="section is-medium ">
         <div className="container">
-          <div className="columns is-vcentered">
-            <div className="column">
-              <p className="title">Stay in the loop</p>
-              <p className="subtitle">
-                Keep up to date with news, intern stories, and more. No spam.
-              </p>
-            </div>
-            <div className="column">
-              <MailingListSignupInput />
-            </div>
-          </div>
+          <NewsletterSignupSection />
         </div>
       </div>
     </>
