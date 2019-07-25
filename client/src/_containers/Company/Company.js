@@ -20,8 +20,8 @@ const Company = props => {
   const [selectedJobTitle, setJobTitle] = useState();
 
   const pageDescription = `${company &&
-    company.name}  internship reviews and salaries. 
-    See what it's like to be an intern at ${company && company.name}`;
+    company.name} internship reviews and salaries. See what it's like to be an intern at ${company &&
+    company.name}`;
   const pageTitle = `${company &&
     company.name} Internship Reviews | InternBeat`;
 
