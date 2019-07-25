@@ -38,7 +38,6 @@ const Login = props => {
         </div>
       </div>
       <br />
-      <Footer />
     </>
   );
 };
