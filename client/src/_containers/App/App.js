@@ -3,10 +3,12 @@ import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import ScrollToTop from "_components/RouterScrollToTop";
-import Footer from "_components/Footer";
+
 import Navbar from "_containers/Navbar";
 import Home from "_containers/Home";
+import Login from "_containers/Login";
 import Company from "_containers/Company";
+import Footer from "_components/Footer";
 
 import "./App.css";
 
@@ -25,6 +27,7 @@ const App = () => {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
         <title>InternBeat | Internship Reviews</title>
+        <script src="https://kit.fontawesome.com/1e848a86f3.js" />
       </Helmet>
 
       <Router>
@@ -34,6 +37,7 @@ const App = () => {
             <div className="app-content is-fullheight">
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/companies/:slug" component={Company} />
               </Switch>
             </div>
