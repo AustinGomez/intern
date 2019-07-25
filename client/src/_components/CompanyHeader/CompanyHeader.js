@@ -23,7 +23,15 @@ const CompanyHeader = ({
     );
   }, [iconText, logoUrl]);
 
-  const formatLocation = (hqCity, hqRegion) => {
+  const renderLocation = () => {
+    if (isLoading) {
+      return (
+        <>
+          <Skeleton count={1} height={12} width={100} />
+          <br />
+        </>
+      );
+    }
     let locationString = "";
     if (hqCity) {
       locationString += hqCity;
@@ -55,21 +63,14 @@ const CompanyHeader = ({
                 {!isLoading ? name : <Skeleton height={20} width={200} />}
               </p>
               <small>
-                {totalNumberOfReviews ? (
+                {!isLoading ? (
                   "Reviews: " + String(totalNumberOfReviews)
                 ) : (
                   <Skeleton height={12} width={100} />
                 )}
               </small>
               <br />
-              {!isLoading ? (
-                formatLocation(hqCity, hqRegion)
-              ) : (
-                <>
-                  <Skeleton count={1} height={12} width={100} />
-                  <br />
-                </>
-              )}
+              {renderLocation()}
               <div className="inline">
                 <StarRatings
                   rating={averageRating || 0}
