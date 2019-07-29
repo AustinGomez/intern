@@ -12,6 +12,7 @@ from jobs.models import Job
 from jobs.serializers import JobSerializer
 from reviews.models import Review
 from reviews.serializers import ReviewSerializer
+from users.permissions import IsAuthenticatedOrReadOnly
 
 
 class CompanyFilter(filters.FilterSet):
@@ -29,6 +30,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
     filterset_class = CompanyFilter
     filter_backends = [OrderingFilter, DjangoFilterBackend]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         queryset = search_queryset(self.filter_queryset(self.get_queryset()), request)
