@@ -9,6 +9,7 @@ import Home from "_containers/Home";
 import Company from "_containers/Company";
 
 import "./App.css";
+import EmailConfirmed from "_containers/EmailConfirmed";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/companies/:slug" component={Company} />
+                <Route exact path="/confirmed" component={EmailConfirmed} />
               </Switch>
             </div>
           </div>
