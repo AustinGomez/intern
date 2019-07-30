@@ -11,31 +11,32 @@ const propTypes = {
 const FormContainer = props => {
   const [values, setValues] = useState({});
 
-  let errorMessage = props.errorMessage ? (
+  const errorMessage = props.errorMessage ? (
     <article className="message is-danger">
-      <div className="message-body">{props.errorMessage}h</div>
+      <div className="message-body">{props.errorMessage}</div>
     </article>
   ) : null;
 
   let elements = React.Children.toArray(props.children).map(element => {
-    const func = obj => {
+    const handleChange = event => {
+      const obj = {};
+      obj[element.props.valuesKey] = event.target.value;
       setValues(state => ({ ...state, ...obj }));
-      errorMessage = null; // hide error message if the user is making changes
     };
-    return cloneElement(element, { ...element.props, onUpdate: func });
+    return cloneElement(element, { ...element.props, onUpdate: handleChange });
   });
 
+  const formSubmit = e => {
+    e.preventDefault();
+    props.onSubmit(values);
+  };
+
   return (
-    <div className="control">
+    <form onSubmit={formSubmit}>
       {elements}
       <div className="field is-grouped is-grouped-right">
         <div className="control">
-          <button
-            className="button is-link"
-            onClick={() => props.onSubmit(values)}
-          >
-            Submit
-          </button>
+          <button className="button is-link">Submit</button>
         </div>
         <div className="control">
           <button
@@ -48,7 +49,7 @@ const FormContainer = props => {
       </div>
       <br />
       {errorMessage}
-    </div>
+    </form>
   );
 };
 

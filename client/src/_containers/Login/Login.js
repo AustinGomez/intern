@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import Footer from "_components/Footer";
-
 import FormContainer from "../../_components/Form/FormContainer";
-import FormTextInput from "../../_components/Form/FormTextInput";
+import FormTextInputEmail from "../../_components/Form/FormTextInput/FormTextInputEmail";
+import FormTextInputPassword from "../../_components/Form/FormTextInput/FormTextInputPassword";
 
 const Login = props => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = values => {
-    // SIM FAILURE
     console.log(values);
-    console.log(errorMessage);
     setErrorMessage("Houston, we have a problem!");
   };
   const onCancel = () => {
@@ -30,14 +27,13 @@ const Login = props => {
                 onCancel={onCancel}
                 errorMessage={errorMessage}
               >
-                <FormTextInput valuesKey="email" type="email" />
-                <FormTextInput valuesKey="password" type="password" />
+                <FormTextInputEmail valuesKey="email" isRequired />
+                <FormTextInputPassword valuesKey="password" isRequired />
               </FormContainer>
             </div>
           </div>
         </div>
       </div>
-      <br />
     </>
   );
 };

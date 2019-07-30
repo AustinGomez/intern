@@ -2,7 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  onUpdate: PropTypes.func
+  onUpdate: PropTypes.func,
+  valuesKey: PropTypes.string.isRequired,
+  isRequired: PropTypes.bool
+};
+const defaultProps = {
+  isRequired: false
 };
 
 const FormTextInputPassword = props => {
@@ -15,6 +20,7 @@ const FormTextInputPassword = props => {
           type="password"
           placeholder="abc123"
           onInput={props.onUpdate}
+          required={props.isRequired}
         />
         <span className="icon is-small is-left">
           <i className="fas fa-lock" />
@@ -25,5 +31,6 @@ const FormTextInputPassword = props => {
 };
 
 FormTextInputPassword.propTypes = propTypes;
+FormTextInputPassword.defaultProps = defaultProps;
 
 export default FormTextInputPassword;
