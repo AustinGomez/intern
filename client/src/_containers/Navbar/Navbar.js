@@ -26,7 +26,7 @@ const Navbar = props => {
         </span>
       </div>
       <div id="navMenu" className={`navbar-menu ${isOpen ? "is-active" : ""}`}>
-        <div className="navbar-start"></div>
+        <div className="navbar-start" />
 
         <div className="navbar-end">
           <div className="navbar-item">
@@ -35,7 +35,7 @@ const Navbar = props => {
               buttonCustomClass={"is-hidden-desktop"}
             />
           </div>
-          <Link className="navbar-item" to="/">
+          <Link className="navbar-item" to="/login">
             Login
           </Link>
         </div>
