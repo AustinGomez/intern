@@ -17,15 +17,21 @@ const FormTextInput = props => {
   return (
     <div className="field">
       <label className="label">{props.label}</label>
-      <div className="control">
+      <div className={`control ${props.icon ? "has-icons-left" : ""}`}>
         <input
-          className="input"
-          type="text"
+          className={`input ${props.error ? "is-danger" : ""}`}
+          type={`${props.type || "text"}`}
           placeholder={props.placeholder}
           onInput={props.onUpdate}
           required={props.isRequired}
         />
+        {props.icon ? (
+          <span className="icon is-small is-left">
+            <i className={props.icon} />
+          </span>
+        ) : null}
       </div>
+      {props.error ? <p class="help is-danger">{props.error}</p> : null}
     </div>
   );
 };

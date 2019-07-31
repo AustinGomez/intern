@@ -3,15 +3,17 @@ import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import ScrollToTop from "_components/RouterScrollToTop";
+import { ToastContainer } from "react-toastify";
 
 import Navbar from "_containers/Navbar";
 import Home from "_containers/Home";
 import Login from "_containers/Login";
 import Company from "_containers/Company";
 import Footer from "_components/Footer";
+import EmailConfirmed from "_containers/EmailConfirmed";
 
 import "./App.css";
-import EmailConfirmed from "_containers/EmailConfirmed";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -46,6 +48,12 @@ const App = () => {
           </div>
           <Footer />
         </ScrollToTop>
+        <ToastContainer
+          hideProgressBar={true}
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+          closeOnClick={true}
+        />
       </Router>
     </>
   );
