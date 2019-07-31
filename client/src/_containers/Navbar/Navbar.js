@@ -30,10 +30,7 @@ const Navbar = props => {
 
         <div className="navbar-end">
           <div className="navbar-item">
-            <SearchBar
-              inputCustomClass={"is-hidden-desktop"}
-              buttonCustomClass={"is-hidden-desktop"}
-            />
+            <SearchBar hideOnDesktop />
           </div>
           <Link className="navbar-item" to="/login">
             Login
