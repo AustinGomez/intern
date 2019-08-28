@@ -12,12 +12,14 @@ import Company from "_containers/Company";
 import Footer from "_components/Footer";
 import EmailConfirmed from "_containers/EmailConfirmed";
 
+import { UserProvider } from "_state/UserState";
+
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <>
+    <UserProvider>
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="og:title" content={`InternBeat | Internship Reviews`} />
@@ -55,7 +57,7 @@ const App = () => {
           closeOnClick={true}
         />
       </Router>
-    </>
+    </UserProvider>
   );
 };
 

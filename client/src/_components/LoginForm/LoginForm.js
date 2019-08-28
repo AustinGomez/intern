@@ -3,11 +3,12 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import FormContainer from "../../_components/Form/FormContainer";
 import FormTextInput from "../../_components/Form/FormTextInput/FormTextInput";
-import { toast } from "react-toastify";
+import { useUserStateValue } from "_state/UserState";
 
 const LoginForm = props => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [{ user }, dispatch] = useUserStateValue();
 
   const onSubmit = values => {
     setIsLoading(true);
@@ -17,13 +18,17 @@ const LoginForm = props => {
       data: values
     })
       .then(response => {
-        localStorage.setItem("key", JSON.stringify(response.data.key));
-        toast("Logged In!", {
-          className: "has-text-success"
+        dispatch({
+          type: "SET_USER",
+          user: response.data.key
         });
+        setError("");
+        props.onClose();
       })
       .catch(error => {
         setError(error.response.data);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
