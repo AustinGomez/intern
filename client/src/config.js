@@ -4,11 +4,11 @@ let apiHost, mailchimpSignupURL;
 let path = "/api/";
 
 switch (env) {
-  case "development":
+  case "":
     apiHost = "http://localhost:8000";
     mailchimpSignupURL = "fake";
     break;
-  case "production":
+  case "development":
     apiHost = "https://internbeat.appspot.com";
     mailchimpSignupURL =
       "https://internbeat.us3.list-manage.com/subscribe/post?u=842438e7e73305cf065d457b4&amp;id=f09ce65602";
