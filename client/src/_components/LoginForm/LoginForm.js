@@ -35,7 +35,7 @@ const LoginForm = props => {
 
   return (
     <>
-      <h1 className="title is-2">Log In</h1>
+      <h1 className="title is-4">Log In</h1>
       <FormContainer
         onSubmit={onSubmit}
         errorMessage={error.non_field_errors}
@@ -44,7 +44,7 @@ const LoginForm = props => {
         isLoading={isLoading}
       >
         <FormTextInput
-          label={"email"}
+          label={"Email"}
           valuesKey="email"
           icon="fas fa-envelope"
           type="email"

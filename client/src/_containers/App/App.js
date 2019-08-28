@@ -16,6 +16,7 @@ import { UserProvider } from "_state/UserState";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import ConfirmEmail from "_containers/ConfirmEmail";
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/companies/:slug" component={Company} />
                 <Route exact path="/confirmed" component={EmailConfirmed} />
+                <Route exact path="/confirm-email" component={ConfirmEmail} />
               </Switch>
             </div>
           </div>
@@ -55,6 +57,7 @@ const App = () => {
           pauseOnHover={false}
           pauseOnFocusLoss={false}
           closeOnClick={true}
+          autoClose={2000}
         />
       </Router>
     </UserProvider>

@@ -53,18 +53,15 @@ const Navbar = props => {
 
           <div className="navbar-end">
             <div className="navbar-item">
-              <SearchBar
-                inputCustomClass={"is-hidden-desktop"}
-                buttonCustomClass={"is-hidden-desktop"}
-              />
+              <SearchBar hideOnDesktop />
             </div>
             {user ? (
               <a className="navbar-item is-link" onClick={handleLogout}>
-                Log Out
+                <small>Log Out</small>
               </a>
             ) : (
               <a className="navbar-item is-link" onClick={openLoginModal}>
-                Log In
+                <small>Log In</small>
               </a>
             )}
           </div>

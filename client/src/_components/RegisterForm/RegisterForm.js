@@ -18,6 +18,7 @@ const RegisterForm = props => {
       .then(response => {
         setIsLoading(false);
         props.history.push("/confirm-email");
+        props.onClose();
       })
       .catch(error => {
         setError(error.response.data);
@@ -27,7 +28,7 @@ const RegisterForm = props => {
 
   return (
     <>
-      <h1 className="title is-2">Register</h1>
+      <h1 className="title is-4">Register</h1>
       <FormContainer
         onSubmit={onSubmit}
         errorMessage={error.non_field_errors}
@@ -36,7 +37,7 @@ const RegisterForm = props => {
         isLoading={isLoading}
       >
         <FormTextInput
-          label={"email"}
+          label={"Email"}
           valuesKey="email"
           icon="fas fa-envelope"
           type="email"

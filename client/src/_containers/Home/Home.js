@@ -123,17 +123,18 @@ const Home = props => {
           <div className="columns is-vcentered">
             <div className="column">
               <p className="title is-2 has-text-centered-mobile has-text-white">
-                Powered by Students
+                Internship reviews powered by students.
               </p>
-              <p className="subtitle has-text-centered-mobile has-text-white">
-                Find intern salaries, read reviews, and explore the best
-                companies to work for.
+              <p className=" has-text-centered-mobile has-text-white">
+                Read internship reviews, see salaries and offers, and explore
+                the best companies to work for.
               </p>
             </div>
             <div className="column">
               <div className="box">
                 <ContentCard
                   userName={featuredReview.user_name}
+                  x
                   userId={featuredReview.user_id}
                   overallRating={featuredReview.overall_rating}
                   description={featuredReview.description}

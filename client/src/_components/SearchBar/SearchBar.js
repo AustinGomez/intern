@@ -10,12 +10,17 @@ import "./SearchBar.css";
 const propTypes = {
   history: PropTypes.object,
   inputCustomClass: PropTypes.string,
-  buttonCustomClass: PropTypes.string
+  hideOnDesktop: PropTypes.boolean
+};
+const defaultProps = {
+  inputCustomClass: "",
+  hideOnDesktop: false
 };
 
-const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
+const SearchBar = ({ history, inputCustomClass, hideOnDesktop }) => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const renderSuggestion = (suggestion, { query }) => {
     const matches = autoSuggestMatch(suggestion.name, query);
@@ -63,11 +68,15 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
       return;
     }
 
+    setLoading(true);
+
     axios(`companies/?q=${val}&limit=3`)
       .then(response => {
+        setLoading(false);
         setSuggestions(response.data ? response.data.results : []);
       })
       .catch(error => {
+        setLoading(false);
         console.log(error);
       });
   };
@@ -84,6 +93,19 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
     className: `input ${inputCustomClass}`
   };
 
+  const renderInputComponent = inputProps => (
+    <div
+      className={`control has-icons-left ${
+        hideOnDesktop ? "is-hidden-desktop" : ""
+      } ${isLoading ? "is-loading" : ""}`}
+    >
+      <input className="input" type="text" {...inputProps} />
+      <span className={`icon is-small is-left`}>
+        <i className="fas fa-search" />
+      </span>
+    </div>
+  );
+
   return (
     <div className="field is-grouped">
       <div className="control is-expanded">
@@ -93,19 +115,16 @@ const SearchBar = ({ history, inputCustomClass, buttonCustomClass }) => {
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           getSuggestionValue={getSuggestionValue}
           onSuggestionSelected={handleSuggestionSelected}
+          renderInputComponent={renderInputComponent}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
         />
       </div>
-      <p className="control">
-        <button className={`button is-primary ${buttonCustomClass}`}>
-          <strong>Search</strong>
-        </button>
-      </p>
     </div>
   );
 };
 
 SearchBar.propTypes = propTypes;
+SearchBar.defaultProps = defaultProps;
 
 export default withRouter(SearchBar);
