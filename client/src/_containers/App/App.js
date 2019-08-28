@@ -3,19 +3,24 @@ import { Switch, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import ScrollToTop from "_components/RouterScrollToTop";
+import { ToastContainer } from "react-toastify";
 
 import Navbar from "_containers/Navbar";
 import Home from "_containers/Home";
 import Login from "_containers/Login";
 import Company from "_containers/Company";
 import Footer from "_components/Footer";
+import EmailConfirmed from "_containers/EmailConfirmed";
+
+import { UserProvider } from "_state/UserState";
 
 import "./App.css";
-import EmailConfirmed from "_containers/EmailConfirmed";
+import "react-toastify/dist/ReactToastify.css";
+import ConfirmEmail from "_containers/ConfirmEmail";
 
 const App = () => {
   return (
-    <>
+    <UserProvider>
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="og:title" content={`InternBeat | Internship Reviews`} />
@@ -41,13 +46,21 @@ const App = () => {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/companies/:slug" component={Company} />
                 <Route exact path="/confirmed" component={EmailConfirmed} />
+                <Route exact path="/confirm-email" component={ConfirmEmail} />
               </Switch>
             </div>
           </div>
           <Footer />
         </ScrollToTop>
+        <ToastContainer
+          hideProgressBar={true}
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+          closeOnClick={true}
+          autoClose={2000}
+        />
       </Router>
-    </>
+    </UserProvider>
   );
 };
 

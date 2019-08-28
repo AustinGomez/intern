@@ -1,8 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-const EmailConfirmed = () => {
+import { useUserStateValue } from "_state/UserState";
+
+const EmailConfirmed = props => {
+  const [{ user }] = useUserStateValue();
+
+  // If the user is logged in, then bring them to the home page.
+  if (user) {
+    props.history.push("/");
+  }
+
   return (
     <div className="hero is-fullheight-with-navbar">
       <div className="hero-body">
@@ -29,4 +38,4 @@ const EmailConfirmed = () => {
   );
 };
 
-export default EmailConfirmed;
+export default withRouter(EmailConfirmed);

@@ -36,15 +36,21 @@ const FormContainer = props => {
       {elements}
       <div className="field is-grouped is-grouped-right">
         <div className="control">
-          <button className="button is-link">Submit</button>
+          <button
+            className={`button is-link ${props.isLoading ? " is-loading" : ""}`}
+          >
+            Submit
+          </button>
         </div>
         <div className="control">
-          <button
-            className="button is-text"
-            onClick={() => props.onCancel(values)}
-          >
-            Cancel
-          </button>
+          {!props.hideCancelButton ? (
+            <button
+              className="button is-text"
+              onClick={() => props.onCancel(values)}
+            >
+              Cancel
+            </button>
+          ) : null}
         </div>
       </div>
       <br />
