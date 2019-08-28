@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LoginForm from "_components/LoginForm";
 import RegisterForm from "_components/RegisterForm";
 import "./LoginModal.css";
 
 const LoginModal = props => {
   const [isLogin, setIsLogin] = useState(true);
+  const handleClose = () => {
+    props.onClose();
+    setIsLogin(true);
+  };
 
   return (
     <div className={`modal ${props.isActive ? "is-active" : ""}`}>
@@ -36,7 +40,7 @@ const LoginModal = props => {
       <button
         className="modal-close is-large"
         aria-label="close"
-        onClick={props.onClose}
+        onClick={handleClose}
       ></button>
     </div>
   );

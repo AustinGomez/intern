@@ -34,7 +34,6 @@ const RegisterForm = props => {
         errorMessage={error.non_field_errors}
         isLoading={isLoading}
         hideCancelButton={true}
-        isLoading={isLoading}
       >
         <FormTextInput
           label={"Email"}

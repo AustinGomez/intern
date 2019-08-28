@@ -5,7 +5,7 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { useUserStateValue } from "_state/UserState";
 
 const EmailConfirmed = props => {
-  const [{ user }, dispatch] = useUserStateValue();
+  const [{ user }] = useUserStateValue();
 
   // If the user is logged in, then bring them to the home page.
   if (user) {
