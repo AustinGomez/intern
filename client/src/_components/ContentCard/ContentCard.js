@@ -8,6 +8,7 @@ import Skeleton from "react-loading-skeleton";
 import "./ContentCard.css";
 
 const propTypes = {
+  disableLinkToCompanyPage: PropTypes.bool,
   overallRating: PropTypes.number,
   description: PropTypes.string,
   company: PropTypes.object,
@@ -26,7 +27,8 @@ const ContentCard = ({
   payFrequency,
   currency,
   showIcon = true,
-  showDescription = true
+  showDescription = true,
+  disableLinkToCompanyPage = false
 }) => {
   const formattedDescription = text => {
     if (textLimit && text.length > textLimit) {
@@ -40,26 +42,32 @@ const ContentCard = ({
       return;
     }
 
-    if (company) {
+    if (!company) {
       return (
         <div className="media-left">
-          <Link to={`/companies/${company.slug}`} className="image is-64x64">
-            <FallbackIcon
-              iconText={company.name}
-              src={company.logo_url}
-              height={64}
-              width={64}
-            />
-          </Link>
+          <Skeleton width={64} height={64} />{" "}
         </div>
       );
     }
 
-    return (
-      <div className="media-left">
-        <Skeleton width={64} height={64} />{" "}
-      </div>
+    const fallbackIcon = (
+      <FallbackIcon
+        iconText={company.name}
+        src={company.logo_url}
+        height={64}
+        width={64}
+      />
     );
+
+    const icon = disableLinkToCompanyPage ? (
+      fallbackIcon
+    ) : (
+      <Link to={`/companies/${company.slug}`} className="image is-64x64">
+        {fallbackIcon}
+      </Link>
+    );
+
+    return <div className="media-left">{icon}</div>;
   };
 
   const renderTitle = () => {
@@ -67,7 +75,9 @@ const ContentCard = ({
       return <Skeleton width={150} />;
     }
 
-    return (
+    return disableLinkToCompanyPage ? (
+      title
+    ) : (
       <Link className="has-text-grey-dark" to={`/companies/${company.slug}`}>
         {title}
       </Link>

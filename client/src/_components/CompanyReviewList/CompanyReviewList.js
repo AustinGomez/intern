@@ -40,6 +40,7 @@ const CompanyReviewList = ({ reviews, isLoading }) => {
           jobTitle={review.job.title}
           jobLocation={review.job.location}
           showIcon={false}
+          disableLinkToCompanyPage
         />
         {index !== reviews.length - 1 ? <hr /> : null}
       </div>
