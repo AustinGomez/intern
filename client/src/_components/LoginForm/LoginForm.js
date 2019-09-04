@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import FormContainer from "../../_components/Form/FormContainer";
-import FormTextInput from "../../_components/Form/FormTextInput/FormTextInput";
+import { FormContainer, FormTextInput } from "../FormComponents";
 import { useUserStateValue } from "_state/UserState";
 
 const LoginForm = props => {

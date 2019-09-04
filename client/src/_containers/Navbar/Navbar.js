@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "_components/SearchBar";
+import CompanySearchBar from "_components/CompanySearchBar";
 import LoginModal from "_components/LoginModal";
 import { useUserStateValue } from "_state/UserState";
 
@@ -53,7 +53,7 @@ const Navbar = props => {
 
           <div className="navbar-end">
             <div className="navbar-item">
-              <SearchBar hideOnDesktop />
+              <CompanySearchBar hideOnDesktop />
             </div>
             {user ? (
               <a className="navbar-item is-link" onClick={handleLogout}>

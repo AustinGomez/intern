@@ -10,6 +10,13 @@ const LoginModal = props => {
     setIsLogin(true);
   };
 
+  useEffect(() => {
+    window.addEventListener("keyup", handleClose);
+    return () => {
+      window.removeEventListener("keyup", handleClose);
+    };
+  }, []);
+
   return (
     <div className={`modal ${props.isActive ? "is-active" : ""}`}>
       <div className="modal-background" onClick={props.onClose}></div>

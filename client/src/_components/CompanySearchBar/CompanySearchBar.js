@@ -5,7 +5,7 @@ import throttle from "lodash/throttle";
 import { withRouter } from "react-router-dom";
 import { autoSuggestMatch, autoSuggestParse } from "./SearchBarUtilities";
 import PropTypes from "prop-types";
-import "./SearchBar.css";
+import "./CompanySearchBar.css";
 
 const propTypes = {
   history: PropTypes.object,
@@ -17,7 +17,12 @@ const defaultProps = {
   hideOnDesktop: false
 };
 
-const SearchBar = ({ history, inputCustomClass, hideOnDesktop }) => {
+const CompanySearchBar = ({
+  history,
+  inputCustomClass,
+  hideOnDesktop,
+  handleSubmit
+}) => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -81,7 +86,7 @@ const SearchBar = ({ history, inputCustomClass, hideOnDesktop }) => {
       });
   };
 
-  const handleSuggestionSelected = (event, selectedSuggestion) => {
+  const defaultHandleSuggestionSelected = (event, selectedSuggestion) => {
     history.push(`/companies/${selectedSuggestion.suggestion.slug}`);
     event.preventDefault();
   };
@@ -114,7 +119,7 @@ const SearchBar = ({ history, inputCustomClass, hideOnDesktop }) => {
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           getSuggestionValue={getSuggestionValue}
-          onSuggestionSelected={handleSuggestionSelected}
+          onSuggestionSelected={handleSubmit || defaultHandleSuggestionSelected}
           renderInputComponent={renderInputComponent}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
@@ -124,7 +129,7 @@ const SearchBar = ({ history, inputCustomClass, hideOnDesktop }) => {
   );
 };
 
-SearchBar.propTypes = propTypes;
-SearchBar.defaultProps = defaultProps;
+CompanySearchBar.propTypes = propTypes;
+CompanySearchBar.defaultProps = defaultProps;
 
-export default withRouter(SearchBar);
+export default withRouter(CompanySearchBar);

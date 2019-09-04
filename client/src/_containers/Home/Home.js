@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import useFetchPaginatedData from "../../_hooks/useFetchPaginatedData";
 import ContentCard from "_components/ContentCard";
-import SearchBar from "_components/SearchBar";
+import CompanySearchBar from "_components/CompanySearchBar";
 import featuredReview from "./FeaturedReview";
 import NewsletterSignupSection from "_components/NewsletterSignupSection";
 
@@ -114,7 +114,7 @@ const Home = props => {
             <h1 className="title is-4 has-text-centered">
               Find your dream internship.
             </h1>
-            <SearchBar />
+            <CompanySearchBar />
           </div>
         </div>
       </div>

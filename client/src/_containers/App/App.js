@@ -17,6 +17,7 @@ import { UserProvider } from "_state/UserState";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmEmail from "_containers/ConfirmEmail";
+import WriteReview from "_containers/WriteReview";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
                 <Route exact path="/companies/:slug" component={Company} />
                 <Route exact path="/confirmed" component={EmailConfirmed} />
                 <Route exact path="/confirm-email" component={ConfirmEmail} />
+                <Route exact path="/write-review" component={WriteReview} />
               </Switch>
             </div>
           </div>

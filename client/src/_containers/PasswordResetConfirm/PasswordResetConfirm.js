@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import FormContainer from "../../_components/Form/FormContainer";
-import FormTextInputPassword from "../../_components/Form/FormTextInput/FormTextInputPassword";
+import { FormContainer, FormTextInput } from "../../_components/FormComponents";
 
 const PasswordResetConfirm = props => {
   const [errorMessage, setErrorMessage] = useState("");
