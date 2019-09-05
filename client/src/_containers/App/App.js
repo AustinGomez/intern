@@ -12,7 +12,7 @@ import Company from "_containers/Company";
 import Footer from "_components/Footer";
 import EmailConfirmed from "_containers/EmailConfirmed";
 
-import { UserProvider } from "_state/UserState";
+import { GlobalStateProvider } from "_state/GlobalStateProvider";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ import ConfirmEmail from "_containers/ConfirmEmail";
 
 const App = () => {
   return (
-    <UserProvider>
+    <GlobalStateProvider>
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="og:title" content={`InternBeat | Internship Reviews`} />
@@ -60,7 +60,7 @@ const App = () => {
           autoClose={2000}
         />
       </Router>
-    </UserProvider>
+    </GlobalStateProvider>
   );
 };
 

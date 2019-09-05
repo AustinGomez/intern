@@ -3,12 +3,12 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import FormContainer from "../../_components/Form/FormContainer";
 import FormTextInput from "../../_components/Form/FormTextInput/FormTextInput";
-import { useUserStateValue } from "_state/UserState";
+import { useStateValue } from "_state/State";
 
 const LoginForm = props => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [{ user }, dispatch] = useUserStateValue();
+  const [{ user }, dispatch] = useStateValue();
 
   const onSubmit = values => {
     setIsLoading(true);
