@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { FormContainer, FormTextInput } from "../FormComponents";
-import { useUserStateValue } from "_state/UserState";
+import { useStateValue } from "_state/State";
 
 const LoginForm = props => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [{ user }, dispatch] = useUserStateValue();
+  const [{ user }, dispatch] = useStateValue();
 
   const onSubmit = values => {
     setIsLoading(true);
@@ -25,6 +25,7 @@ const LoginForm = props => {
         props.onClose();
       })
       .catch(error => {
+        console.log(error);
         setError(error.response.data);
       })
       .finally(() => {

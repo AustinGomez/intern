@@ -12,7 +12,7 @@ import Company from "_containers/Company";
 import Footer from "_components/Footer";
 import EmailConfirmed from "_containers/EmailConfirmed";
 
-import { UserProvider } from "_state/UserState";
+import { GlobalStateProvider } from "_state/GlobalState";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,7 +21,7 @@ import WriteReview from "_containers/WriteReview";
 
 const App = () => {
   return (
-    <UserProvider>
+    <GlobalStateProvider>
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="og:title" content={`InternBeat | Internship Reviews`} />
@@ -48,7 +48,7 @@ const App = () => {
                 <Route exact path="/companies/:slug" component={Company} />
                 <Route exact path="/confirmed" component={EmailConfirmed} />
                 <Route exact path="/confirm-email" component={ConfirmEmail} />
-                <Route exact path="/write-review" component={WriteReview} />
+                <Route path="/write-review/" component={WriteReview} />
               </Switch>
             </div>
           </div>
@@ -62,7 +62,7 @@ const App = () => {
           autoClose={2000}
         />
       </Router>
-    </UserProvider>
+    </GlobalStateProvider>
   );
 };
 

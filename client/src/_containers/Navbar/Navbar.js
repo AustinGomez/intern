@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CompanySearchBar from "_components/CompanySearchBar";
 import LoginModal from "_components/LoginModal";
-import { useUserStateValue } from "_state/UserState";
+import { useStateValue } from "_state/State";
 
 const Navbar = props => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [{ user }, dispatch] = useUserStateValue();
+  const [{ user }, dispatch] = useStateValue();
 
   const openLoginModal = () => {
     setIsLoginModalOpen(true);

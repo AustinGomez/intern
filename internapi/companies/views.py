@@ -16,8 +16,10 @@ from users.permissions import IsAuthenticatedOrReadOnly
 
 
 class CompanyFilter(filters.FilterSet):
-    min_total_rating = filters.NumberFilter(field_name="total_rating", lookup_expr='gte')
-    min_avg_rating = filters.NumberFilter(field_name="avg_rating", lookup_expr='gte')
+    min_total_rating = filters.NumberFilter(
+        field_name="total_rating", lookup_expr='gte')
+    min_avg_rating = filters.NumberFilter(
+        field_name="avg_rating", lookup_expr='gte')
 
     class Meta:
         model = Company
@@ -33,7 +35,8 @@ class CompanyViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
-        queryset = search_queryset(self.filter_queryset(self.get_queryset()), request)
+        queryset = search_queryset(
+            self.filter_queryset(self.get_queryset()), request)
         page = self.paginate_queryset(queryset)
         serializer = self.serializer_class(page, many=True)
         return self.get_paginated_response(serializer.data)

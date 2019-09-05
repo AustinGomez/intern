@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import LoginForm from "_components/LoginForm";
 import RegisterForm from "_components/RegisterForm";
 import "./LoginModal.css";
+import { keyToTestName } from "jest-snapshot/build/utils";
 
 const LoginModal = props => {
   const [isLogin, setIsLogin] = useState(true);
-  const handleClose = () => {
-    props.onClose();
-    setIsLogin(true);
+
+  const handleClose = e => {
+    if (e.key === "Escape") {
+      props.onClose();
+      setIsLogin(true);
+    }
   };
 
   useEffect(() => {

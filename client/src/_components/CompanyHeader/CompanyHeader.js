@@ -4,6 +4,7 @@ import FallbackIcon from "../../_components/FallbackIcon";
 import "./CompanyHeader.scss";
 import StarRatings from "react-star-ratings";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 
 const CompanyHeader = ({
   iconText,
@@ -50,6 +51,8 @@ const CompanyHeader = ({
     );
   };
 
+  const handleWriteReviewClick = () => {};
+
   return (
     <div className="box">
       <div className="columns is-centered is-vcentered">
@@ -87,7 +90,11 @@ const CompanyHeader = ({
       </div>
       <hr />
       <div className="column is-narrow has-text-centered-mobile">
-        <button className="button is-primary">Write a review</button>
+        {!isLoading && (
+          <Link to={`/write-review`}>
+            <button className="button is-primary">Write a review</button>
+          </Link>
+        )}
       </div>
       <br />
       <div>{!isLoading ? description : <Skeleton count={3} />}</div>

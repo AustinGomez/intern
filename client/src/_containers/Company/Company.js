@@ -7,11 +7,12 @@ import Paginator from "_components/Paginator";
 import "./Company.css";
 import CompanyReviewList from "_components/CompanyReviewList/CompanyReviewList";
 import { Helmet } from "react-helmet";
+import { useStateValue } from "_state/State";
 
 const PAGE_LENGTH = 10;
 
 const Company = props => {
-  const [company, setCompany] = useState({});
+  const [{ company }, dispatch] = useStateValue();
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [companyReviews, setCompanyReviews] = useState([]);
   const [jobs, setJobs] = useState([]);
@@ -25,10 +26,17 @@ const Company = props => {
   const pageTitle = `${company &&
     company.name} Internship Reviews | InternBeat`;
 
+  const fetchDispatch = useCallback(data => {
+    dispatch({
+      type: "SET_COMPANY",
+      company: data
+    });
+  }, []);
+
   // Fetch company
   const [isCompanyLoading] = useFetchData(
     `companies/${props.match.params.slug}/`,
-    setCompany
+    fetchDispatch
   );
 
   const setFetchedReviews = useCallback(
@@ -59,12 +67,6 @@ const Company = props => {
   useEffect(() => {
     setCurrentPageNumber(1);
   }, [selectedJobLocation, selectedJobTitle]);
-
-  useEffect(() => {
-    if (company && company.name) {
-      // document.title = ;
-    }
-  }, [company]);
 
   const jobTitles =
     jobs &&
@@ -97,17 +99,17 @@ const Company = props => {
           <div className="columns is-centered">
             <div className="column">
               <CompanyHeader
-                name={company.name}
-                iconText={company.name}
-                logoUrl={company.logo_url}
-                averageRating={company.avg_rating}
-                totalNumberOfReviews={company.user_reviews_count}
-                hqCity={company.hq_city}
-                hqRegion={company.hq_region}
-                hqCountry={company.hq_country}
-                companyWebsiteUrl={company.website_url}
-                companySize={company.size}
-                description={company.description}
+                name={company && company.name}
+                iconText={company && company.name}
+                logoUrl={company && company.logo_url}
+                averageRating={company && company.avg_rating}
+                totalNumberOfReviews={company && company.user_reviews_count}
+                hqCity={company && company.hq_city}
+                hqRegion={company && company.hq_region}
+                hqCountry={company && company.hq_country}
+                companyWebsiteUrl={company && company.website_url}
+                companySize={company && company.size}
+                description={company && company.description}
                 isLoading={isCompanyLoading}
               />
             </div>
