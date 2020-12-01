@@ -2,10 +2,10 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { useUserStateValue } from "_state/UserState";
+import { useStateValue } from "_state/State";
 
 const EmailConfirmed = props => {
-  const [{ user }] = useUserStateValue();
+  const [{ user }] = useStateValue();
 
   // If the user is logged in, then bring them to the home page.
   if (user) {
